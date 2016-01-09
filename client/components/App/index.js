@@ -1,4 +1,4 @@
-import ComponentHeader from 'components/Header'
+import ComponentHeader from 'components/Header';
 
 export default React.createClass({
     displayName: 'App',

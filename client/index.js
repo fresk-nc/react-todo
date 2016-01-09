@@ -1,4 +1,4 @@
-import './styles/index.styl'
+import './styles/index.styl';
 import ComponentApp from 'components/App';
 
 ReactDOM.render((
