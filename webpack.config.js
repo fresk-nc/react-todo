@@ -33,6 +33,8 @@ var config = {
         extensions: ['', '.js']
     },
     plugins: [
+        new webpack.NoErrorsPlugin(),
+        
         new HtmlWebpackPlugin({
             inject: 'body',
             template: path.join(clientPath, 'index.html'),
