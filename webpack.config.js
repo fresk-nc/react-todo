@@ -13,8 +13,10 @@ var config = {
     context: clientPath,
     entry: {
         vendor: [
+            'events',
             'react',
-            'react-dom'
+            'react-dom',
+            'flux/dist/Flux.js'
         ],
         index: './index.js'
     },
@@ -24,7 +26,9 @@ var config = {
     resolve: {
         extensions: ['', '.js', '.styl'],
         alias: {
-            components: path.join(clientPath, 'components')
+            components: path.join(clientPath, 'components'),
+            stores: path.join(clientPath, 'stores'),
+            dispatcher: path.join(clientPath, 'dispatcher')
         }
     },
     resolveLoader: {
@@ -60,6 +64,9 @@ var config = {
         })
     ],
     module: {
+        noParse: [
+            /node_modules[\/\\]flux[\/\\]dist[\/\\]Flux.js/
+        ],
         loaders: [
             {
                 test: /\.js$/,

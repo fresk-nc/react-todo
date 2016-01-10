@@ -9,11 +9,10 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
+    "events": "1.1.0",
     "flux": "2.1.1",
-    "history": "1.17.0",
     "react": "0.14.5",
-    "react-dom": "0.14.5",
-    "react-router": "1.0.3"
+    "react-dom": "0.14.5"
   },
   "devDependencies": {
     "babel-core": "6.4.0",
