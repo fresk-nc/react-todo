@@ -31,6 +31,6 @@
     "webpack": "1.12.9"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint . --no-color"
   }
 }
