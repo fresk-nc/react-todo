@@ -1,0 +1,7 @@
+.git/
+.idea/
+node_modules/
+static/
+webpack.config.js
+package.json
+**/.*

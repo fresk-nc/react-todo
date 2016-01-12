@@ -9,16 +9,16 @@ compiler.watch({
     aggregateTimeout: 300,
     poll: true
 }, (err, stats) => {
-    console.log(`Rebuild in ${stats.endTime - stats.startTime} ms`);
+    console.log(`Rebuild in ${stats.endTime - stats.startTime} ms`); // eslint-disable-line
 });
 
 app.use(express.static('static'));
 
 app.listen(8000, 'localhost', (err) => {
     if (err) {
-        console.log(err);
+        console.log(err); // eslint-disable-line
         return;
     }
 
-    console.log('Listening at http://localhost:8000');
+    console.log('Listening at http://localhost:8000'); // eslint-disable-line
 });
