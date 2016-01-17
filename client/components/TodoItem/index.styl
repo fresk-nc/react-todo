@@ -1,0 +1,41 @@
+.todo-item
+  position: relative
+  padding: 15px 0
+  border-bottom: 1px solid #ddd
+
+  &__title
+    margin-left: 50px
+
+  &.is-complete .todo-item__title
+    text-decoration: line-through
+    color: #aaa
+
+  &__toggle
+    position: absolute
+    top: 0
+    bottom: 0
+    width: 30px
+    height: 30px
+    margin: auto 0
+    border: none
+    outline: none
+    cursor: pointer
+    appearance: none
+
+    &:before
+      display: block
+      width: 30px
+      height: 30px
+      content: ""
+      border: 1px solid #ddd
+      border-radius: 50%
+      box-sizing: border-box
+
+    &:checked:after
+      content: '✔'
+      position: absolute
+      top: 8px
+      left: 8px
+      line-height: 16px
+      font-size: 16px
+      color: #db4c3f

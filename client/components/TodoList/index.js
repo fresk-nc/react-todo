@@ -1,20 +1,13 @@
-let TodoItem = React.createClass({
-    render: function() {
-        return (
-            <div className="todo-item">
-                {this.props.title}
-            </div>
-        );
-    }
-});
+import ComponentTodoItem from 'components/TodoItem';
 
 export default React.createClass({
     render: function() {
-        var nodes = this.props.items.map(function(item) {
-            return (
-                <TodoItem title={item.title} key={item.id} />
-            );
-        });
+        var items = this.props.items;
+        var nodes = [];
+
+        for (var key in items) {
+            nodes.push(<ComponentTodoItem key={key} todo={items[key]} />);
+        }
 
         return (
             <div className="todo-list">

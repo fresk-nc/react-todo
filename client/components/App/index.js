@@ -1,6 +1,6 @@
 import TodoStore from 'stores/TodoStore';
 import ComponentHeader from 'components/Header';
-import ComponentTodoList from 'components/TodoList';
+import ComponentMainSection from 'components/MainSection';
 
 export default React.createClass({
 
@@ -30,7 +30,7 @@ export default React.createClass({
         return (
             <div className="app">
                 <ComponentHeader />
-                <ComponentTodoList items={this.state.items} />
+                <ComponentMainSection items={this.state.items} />
             </div>
         );
     }

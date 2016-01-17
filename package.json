@@ -9,8 +9,10 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
+    "classnames": "2.2.3",
     "events": "1.1.0",
     "flux": "2.1.1",
+    "keymirror": "0.1.1",
     "react": "0.14.5",
     "react-dom": "0.14.5"
   },

@@ -14,10 +14,12 @@ var config = {
     context: clientPath,
     entry: {
         vendor: [
+            'classnames',
             'events',
             'react',
             'react-dom',
-            'flux/dist/Flux.js'
+            'flux/dist/Flux.js',
+            'keymirror'
         ],
         index: './index.js'
     },
@@ -27,7 +29,9 @@ var config = {
     resolve: {
         extensions: ['', '.js', '.styl'],
         alias: {
+            actions: path.join(clientPath, 'actions'),
             components: path.join(clientPath, 'components'),
+            constants: path.join(clientPath, 'constants'),
             stores: path.join(clientPath, 'stores'),
             dispatcher: path.join(clientPath, 'dispatcher')
         }
