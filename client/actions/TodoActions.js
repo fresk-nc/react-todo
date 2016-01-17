@@ -3,7 +3,8 @@ import TodoConstants from 'constants/TodoConstants';
 
 export default {
     deleteItem,
-    toggleComplete
+    toggleComplete,
+    updateTitle
 };
 
 function deleteItem(todoItem) {
@@ -29,6 +30,16 @@ function toggleComplete(todoItem) {
         type: actionType,
         data: {
             id: id
+        }
+    });
+}
+
+function updateTitle(todoItem, title) {
+    AppDispatcher.dispatch({
+        type: TodoConstants.TODO_UPDATE_TITLE,
+        data: {
+            id: todoItem.id,
+            title: title
         }
     });
 }

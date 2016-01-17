@@ -53,6 +53,11 @@ class TodoStore extends CommonStore {
                 this.emitChange();
                 break;
 
+            case TodoConstants.TODO_UPDATE_TITLE:
+                this.updateItem(data.id, { title: data.title });
+                this.emitChange();
+                break;
+
         }
     }
 }
