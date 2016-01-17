@@ -18,6 +18,7 @@ var config = {
             'events',
             'react',
             'react-dom',
+            'react-addons-css-transition-group',
             'flux/dist/Flux.js',
             'keymirror'
         ],
