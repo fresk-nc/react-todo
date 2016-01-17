@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 var nodeEnv = process.env.NODE_ENV || 'development';
 var isDev = (nodeEnv === 'development');
@@ -75,9 +76,16 @@ var config = {
             },
             {
                 test: /\.styl$/,
-                loader: ExtractTextPlugin.extract('css!stylus')
+                loader: ExtractTextPlugin.extract('css!postcss!stylus')
             }
         ]
+    },
+    postcss: function () {
+        return [
+            autoprefixer({
+                'browsers': ['last 2 versions']
+            })
+        ];
     }
 };
 
