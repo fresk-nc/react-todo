@@ -13,7 +13,7 @@ export default React.createClass({
 
         return (
             <div className="todo-list">
-                <ReactCSSTransitionGroup transitionName="todo-list" transitionLeaveTimeout={300}>
+                <ReactCSSTransitionGroup transitionName="todo-list" transitionEnterTimeout={0} transitionLeaveTimeout={300}>
                     {nodes}
                 </ReactCSSTransitionGroup>
             </div>
