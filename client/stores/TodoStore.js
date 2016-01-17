@@ -25,8 +25,12 @@ class TodoStore extends CommonStore {
         return state;
     }
 
-    update(id, data) {
+    updateItem(id, data) {
         state[id] = Object.assign({}, state[id], data);
+    }
+
+    deleteItem(id) {
+        delete state[id];
     }
 
     _onDispatch(action) {
@@ -35,12 +39,17 @@ class TodoStore extends CommonStore {
         switch (type) {
 
             case TodoConstants.TODO_COMPLETE:
-                this.update(data.id, { complete: true });
+                this.updateItem(data.id, { complete: true });
                 this.emitChange();
                 break;
 
             case TodoConstants.TODO_UNDO_COMPLETE:
-                this.update(data.id, { complete: false });
+                this.updateItem(data.id, { complete: false });
+                this.emitChange();
+                break;
+
+            case TodoConstants.TODO_DELETE:
+                this.deleteItem(data.id);
                 this.emitChange();
                 break;
 

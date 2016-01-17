@@ -1,12 +1,18 @@
 .todo-item
   position: relative
-  padding: 15px 0
   border-bottom: 1px solid #ddd
 
-  &__title
-    margin-left: 50px
+  &:hover &__delete
+    opacity: 1
 
-  &.is-complete .todo-item__title
+  &__title
+    display: block
+    margin-left: 50px
+    padding: 15px 30px 15px 0
+
+    transition: color 0.3s
+
+  &.is-complete &__title
     text-decoration: line-through
     color: #aaa
 
@@ -14,12 +20,15 @@
     position: absolute
     top: 0
     bottom: 0
+
     width: 30px
     height: 30px
     margin: auto 0
+
     border: none
     outline: none
     cursor: pointer
+
     appearance: none
 
     &:before
@@ -39,3 +48,26 @@
       line-height: 16px
       font-size: 16px
       color: #db4c3f
+
+  &__delete
+    position: absolute
+    top: 0
+    bottom: 0
+    right: 0
+
+    margin: auto 0
+    width: 30px
+    height: 30px
+
+    font-size: 26px
+    line-height: 30px
+    text-align: center
+
+    cursor: pointer
+    color: #ccc
+
+    opacity: 0
+    transition: opacity 0.3s, color 0.3s
+
+    &:hover
+      color: #000

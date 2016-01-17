@@ -6,6 +6,9 @@ export default React.createClass({
     _onToggleComplete: function() {
         TodoActions.toggleComplete(this.props.todo);
     },
+    _onDeleteClick: function() {
+        TodoActions.deleteItem(this.props.todo);
+    },
     render: function() {
         var todo = this.props.todo;
 
@@ -23,6 +26,7 @@ export default React.createClass({
                 <span className="todo-item__title">
                     {todo.title}
                 </span>
+                <span className="todo-item__delete" onClick={this._onDeleteClick}>×</span>
             </div>
         );
     }

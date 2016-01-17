@@ -2,8 +2,18 @@ import AppDispatcher from'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
 
 export default {
+    deleteItem,
     toggleComplete
 };
+
+function deleteItem(todoItem) {
+    AppDispatcher.dispatch({
+        type: TodoConstants.TODO_DELETE,
+        data: {
+            id: todoItem.id
+        }
+    });
+}
 
 function toggleComplete(todoItem) {
     var id = todoItem.id;
