@@ -2,10 +2,18 @@ import AppDispatcher from'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
 
 export default {
+    createItem,
     deleteItem,
     toggleComplete,
     updateTitle
 };
+
+function createItem(data) {
+    AppDispatcher.dispatch({
+        type: TodoConstants.TODO_CREATE,
+        data: data
+    });
+}
 
 function deleteItem(todoItem) {
     AppDispatcher.dispatch({

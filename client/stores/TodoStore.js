@@ -2,7 +2,7 @@ import CommonStore from 'stores/CommonStore';
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
 
-var state = {
+let state = {
     '1': {
         id: 1,
         title: 'buy eggs',
@@ -21,8 +21,19 @@ var state = {
 };
 
 class TodoStore extends CommonStore {
+
     getAll() {
         return state;
+    }
+
+    createItem(data) {
+        let id = this._generateId();
+
+        state[id] = {
+            id: id,
+            title: data.title,
+            complete: data.complete
+        };
     }
 
     updateItem(id, data) {
@@ -33,8 +44,12 @@ class TodoStore extends CommonStore {
         delete state[id];
     }
 
+    _generateId() {
+        return Math.random().toString(36).slice(2, 9);
+    }
+
     _onDispatch(action) {
-        var { data, type } = action;
+        let { data, type } = action;
 
         switch (type) {
 
@@ -45,6 +60,11 @@ class TodoStore extends CommonStore {
 
             case TodoConstants.TODO_UNDO_COMPLETE:
                 this.updateItem(data.id, { complete: false });
+                this.emitChange();
+                break;
+
+            case TodoConstants.TODO_CREATE:
+                this.createItem(data);
                 this.emitChange();
                 break;
 
@@ -60,6 +80,7 @@ class TodoStore extends CommonStore {
 
         }
     }
+
 }
 
 export default new TodoStore(AppDispatcher);
