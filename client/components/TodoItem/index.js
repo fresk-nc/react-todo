@@ -18,25 +18,27 @@ export default React.createClass({
 
     componentDidUpdate: function() {
         if (this.state.isEdit) {
-            var node = ReactDOM.findDOMNode(this.refs.editField);
-            node.focus();
-            node.setSelectionRange(node.value.length, node.value.length);
+            let input = ReactDOM.findDOMNode(this.refs.editField);
+            input.focus();
+            input.setSelectionRange(input.value.length, input.value.length);
         }
     },
 
     render: function() {
-        var todo = this.props.todo;
-        var editInput;
+        let todo = this.props.todo;
+        let editInput;
 
         if (this.state.isEdit) {
-            editInput = (<input
-                            ref="editField"
-                            className="todo-item__edit"
-                            value={this.state.editText}
-                            onKeyDown={this._handleKeyDown}
-                            onChange={this._handleChange}
-                            onBlur={this._handleSubmit}
-                        />);
+            editInput = (
+                <input
+                    ref="editField"
+                    className="todo-item__edit"
+                    value={this.state.editText}
+                    onKeyDown={this._handleKeyDown}
+                    onChange={this._handleChange}
+                    onBlur={this._handleBlur}
+                />
+            );
         }
 
         return (
@@ -91,13 +93,13 @@ export default React.createClass({
         });
     },
 
-    _handleSubmit: function() {
+    _handleBlur: function() {
         this._save();
     },
 
     _save: function() {
-        var newTitle = this.state.editText.trim();
-        var isValidTitle = (newTitle !== '');
+        let newTitle = this.state.editText.trim();
+        let isValidTitle = (newTitle !== '');
 
         if (isValidTitle) {
             TodoActions.updateTitle(this.props.todo, newTitle);
