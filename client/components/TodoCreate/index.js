@@ -24,10 +24,16 @@ export default React.createClass({
     },
 
     render: function() {
-        let node;
+        return (
+            <div className="todo-create">
+                {this._renderContent()}
+            </div>
+        );
+    },
 
+    _renderContent: function() {
         if (this.state.isActive) {
-            node = (
+            return (
                 <input
                     ref="createField"
                     className="todo-create__input"
@@ -38,18 +44,12 @@ export default React.createClass({
                 />
             );
         } else {
-            node = (
+            return (
                 <span className="todo-create__link" onClick={this._handleLinkClick}>
                     +
                 </span>
             );
         }
-
-        return (
-            <div className="todo-create">
-                {node}
-            </div>
-        );
     },
 
     _handleLinkClick: function() {

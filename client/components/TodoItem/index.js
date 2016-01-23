@@ -26,20 +26,6 @@ export default React.createClass({
 
     render: function() {
         let todo = this.props.todo;
-        let editInput;
-
-        if (this.state.isEdit) {
-            editInput = (
-                <input
-                    ref="editField"
-                    className="todo-item__edit"
-                    value={this.state.editText}
-                    onKeyDown={this._handleKeyDown}
-                    onChange={this._handleChange}
-                    onBlur={this._handleBlur}
-                />
-            );
-        }
 
         return (
             <div
@@ -57,9 +43,24 @@ export default React.createClass({
                     {todo.title}
                 </span>
                 <span className="todo-item__delete" onClick={this._handleDeleteClick}>×</span>
-                {editInput}
+                {this._renderEdit()}
             </div>
         );
+    },
+
+    _renderEdit: function() {
+        if (this.state.isEdit) {
+            return (
+                <input
+                    ref="editField"
+                    className="todo-item__edit"
+                    value={this.state.editText}
+                    onKeyDown={this._handleKeyDown}
+                    onChange={this._handleChange}
+                    onBlur={this._handleBlur}
+                />
+            );
+        }
     },
 
     _handleToggleComplete: function() {
