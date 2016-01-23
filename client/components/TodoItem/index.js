@@ -7,6 +7,8 @@ const ENTER_KEY = 13;
 
 export default React.createClass({
 
+    displayName: 'TodoItem',
+
     getInitialState: function() {
         return {
             isEdit: false,

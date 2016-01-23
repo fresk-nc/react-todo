@@ -3,6 +3,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './index.styl';
 
 export default React.createClass({
+
+    displayName: 'TodoList',
+
     render: function() {
         var items = this.props.items;
         var nodes = [];
@@ -19,4 +22,5 @@ export default React.createClass({
             </div>
         );
     }
+
 });

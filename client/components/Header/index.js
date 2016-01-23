@@ -1,6 +1,7 @@
 import './index.styl';
 
 export default React.createClass({
+
     displayName: 'Header',
 
     render: function() {
@@ -10,4 +11,5 @@ export default React.createClass({
             </div>
         );
     }
+
 });

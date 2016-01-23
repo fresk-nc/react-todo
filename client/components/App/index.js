@@ -4,15 +4,7 @@ import ComponentMainSection from 'components/MainSection';
 
 export default React.createClass({
 
-    _getTodoState: function() {
-        return {
-            items: TodoStore.getAll()
-        };
-    },
-
-    _onChange: function() {
-        this.setState(this._getTodoState());
-    },
+    displayName: 'App',
 
     getInitialState: function() {
         return this._getTodoState();
@@ -33,6 +25,16 @@ export default React.createClass({
                 <ComponentMainSection items={this.state.items} />
             </div>
         );
+    },
+
+    _getTodoState: function() {
+        return {
+            items: TodoStore.getAll()
+        };
+    },
+
+    _onChange: function() {
+        this.setState(this._getTodoState());
     }
 
 });
