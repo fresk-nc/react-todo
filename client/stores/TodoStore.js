@@ -2,28 +2,16 @@ import CommonStore from 'stores/CommonStore';
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
 
-let state = {
-    '1': {
-        id: 1,
-        title: 'buy eggs',
-        complete: false
-    },
-    '2': {
-        id: 2,
-        title: 'buy milk',
-        complete: false
-    },
-    '3': {
-        id: 3,
-        title: 'buy bread',
-        complete: true
-    }
-};
+let state = {};
 
 class TodoStore extends CommonStore {
 
     getAll() {
         return state;
+    }
+
+    fillState(data) {
+        state = data;
     }
 
     createItem(data) {
@@ -70,6 +58,11 @@ class TodoStore extends CommonStore {
 
             case TodoConstants.TODO_DELETE:
                 this.deleteItem(data.id);
+                this.emitChange();
+                break;
+
+            case TodoConstants.TODO_ITEMS_RECEIVED:
+                this.fillState(data);
                 this.emitChange();
                 break;
 

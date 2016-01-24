@@ -1,9 +1,11 @@
 import AppDispatcher from'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
+import ServiceApi from 'services/ServiceApi';
 
 export default {
     createItem,
     deleteItem,
+    requestItems,
     toggleComplete,
     updateTitle
 };
@@ -21,6 +23,15 @@ function deleteItem(todoItem) {
         data: {
             id: todoItem.id
         }
+    });
+}
+
+function requestItems() {
+    ServiceApi.getItems().then((data) => {
+        AppDispatcher.dispatch({
+            type: TodoConstants.TODO_ITEMS_RECEIVED,
+            data: data
+        });
     });
 }
 

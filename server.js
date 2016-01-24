@@ -1,6 +1,7 @@
 var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config');
+var bodyParser = require('body-parser');
 
 var app = express();
 var compiler = webpack(config);
@@ -13,6 +14,28 @@ compiler.watch({
 });
 
 app.use(express.static('static'));
+app.use(bodyParser.json());
+app.use('/api', (req, res) => {
+    if (req.body.method === 'items') {
+        res.send({
+            '1': {
+                id: 1,
+                title: 'buy eggs',
+                complete: false
+            },
+            '2': {
+                id: 2,
+                title: 'buy milk',
+                complete: false
+            },
+            '3': {
+                id: 3,
+                title: 'buy bread',
+                complete: true
+            }
+        });
+    }
+});
 
 app.listen(8000, 'localhost', (err) => {
     if (err) {

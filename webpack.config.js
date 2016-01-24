@@ -33,6 +33,7 @@ var config = {
             actions: path.join(clientPath, 'actions'),
             components: path.join(clientPath, 'components'),
             constants: path.join(clientPath, 'constants'),
+            services: path.join(clientPath, 'services'),
             stores: path.join(clientPath, 'stores'),
             dispatcher: path.join(clientPath, 'dispatcher')
         }
