@@ -5,7 +5,7 @@ import './index.styl';
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
-export default React.createClass({
+let TodoItem = React.createClass({
 
     displayName: 'TodoItem',
 
@@ -112,3 +112,11 @@ export default React.createClass({
         });
     }
 });
+
+if (NODE_ENV === 'development') {
+    TodoItem.propTypes = {
+        todo: React.PropTypes.object.isRequired
+    };
+}
+
+export default TodoItem;

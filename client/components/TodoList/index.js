@@ -2,7 +2,7 @@ import ComponentTodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './index.styl';
 
-export default React.createClass({
+let TodoList = React.createClass({
 
     displayName: 'TodoList',
 
@@ -41,3 +41,11 @@ export default React.createClass({
     }
 
 });
+
+if (NODE_ENV === 'development') {
+    TodoList.propTypes = {
+        items: React.PropTypes.object.isRequired
+    };
+}
+
+export default TodoList;
