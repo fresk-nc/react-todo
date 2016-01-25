@@ -48,7 +48,7 @@ let TodoList = React.createClass({
         if (items !== null && nodes.length === 0) {
             return (
                 <div className="todo-list__empty">
-                    It's the nice time to do something
+                    Now is the good time to do something
                 </div>
             );
         } else {
