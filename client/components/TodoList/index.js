@@ -31,12 +31,6 @@ let TodoList = React.createClass({
         );
     },
 
-    _getTodoState: function() {
-        return {
-            items: TodoStore.getAll()
-        };
-    },
-
     _renderContent() {
         let items = this.state.items;
         let nodes = [];
@@ -65,6 +59,12 @@ let TodoList = React.createClass({
 
     _onChange: function() {
         this.setState(this._getTodoState());
+    },
+
+    _getTodoState: function() {
+        return {
+            items: TodoStore.getAll()
+        };
     }
 
 });
