@@ -1,3 +1,5 @@
+import TodoStore from 'stores/TodoStore';
+import TodoActions from 'actions/TodoActions';
 import ComponentTodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './index.styl';
@@ -5,6 +7,21 @@ import './index.styl';
 let TodoList = React.createClass({
 
     displayName: 'TodoList',
+
+    getInitialState: function() {
+        return {
+            items: null
+        };
+    },
+
+    componentDidMount: function() {
+        TodoActions.requestItems();
+        TodoStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        TodoStore.removeChangeListener(this._onChange);
+    },
 
     render: function() {
         return (
@@ -14,15 +31,27 @@ let TodoList = React.createClass({
         );
     },
 
+    _getTodoState: function() {
+        return {
+            items: TodoStore.getAll()
+        };
+    },
+
     _renderContent() {
-        let items = this.props.items;
+        let items = this.state.items;
         let nodes = [];
 
         for (var key in items) {
             nodes.push(<ComponentTodoItem key={key} todo={items[key]} />);
         }
 
-        if (nodes.length > 0) {
+        if (items !== null && nodes.length === 0) {
+            return (
+                <div className="todo-list__empty">
+                    It's the nice time to do something
+                </div>
+            );
+        } else {
             return (
                 <ReactCSSTransitionGroup
                     transitionName="todo-list"
@@ -31,21 +60,13 @@ let TodoList = React.createClass({
                     {nodes}
                 </ReactCSSTransitionGroup>
             );
-        } else {
-            return (
-                <div className="todo-list__empty">
-                    It's the nice time to do something
-                </div>
-            );
         }
+    },
+
+    _onChange: function() {
+        this.setState(this._getTodoState());
     }
 
 });
-
-if (NODE_ENV === 'development') {
-    TodoList.propTypes = {
-        items: React.PropTypes.object.isRequired
-    };
-}
 
 export default TodoList;

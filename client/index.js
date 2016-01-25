@@ -1,8 +1,5 @@
-import './styles/index.styl';
-import TodoActions from 'actions/TodoActions';
 import ComponentApp from 'components/App';
-
-TodoActions.requestItems();
+import './styles/index.styl';
 
 ReactDOM.render((
     <ComponentApp />
