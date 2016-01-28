@@ -21,17 +21,20 @@ app.use('/api', (req, res) => {
             '1': {
                 id: 1,
                 title: 'buy eggs',
-                complete: false
+                complete: false,
+                isNew: false
             },
             '2': {
                 id: 2,
                 title: 'buy milk',
-                complete: false
+                complete: false,
+                isNew: false
             },
             '3': {
                 id: 3,
                 title: 'buy bread',
-                complete: true
+                complete: true,
+                isNew: false
             }
         });
     }

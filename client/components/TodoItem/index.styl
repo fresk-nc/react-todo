@@ -1,20 +1,32 @@
 .todo-item
-  position: relative
-  border-bottom: 1px solid #ddd
+  display: flex
+  align-items: center
+
+  box-sizing: border-box
+  min-height: 62px
+  padding: 6px 24px
+  box-shadow: 0 1px #b6b6b6
+
+  &:last-child
+    border-bottom: none
 
   &:hover &__delete
     opacity: 1
 
-  &__title
-    display: block
-    margin: 0 30px 0 50px
-    padding: 15px 0
+  &__content
+    display: flex
+    align-self: stretch
+    flex-grow: 1
+    margin: 0 28px
+    cursor: pointer
 
+  &__title
+    align-self: center
     transition: color 0.3s
 
   &.is-complete &__title
     text-decoration: line-through
-    color: #aaa
+    color: #727272
 
   &.is-edit &__delete
     display: none
@@ -22,55 +34,36 @@
   &.is-edit &__toggle
     display: none
 
-  &.is-edit &__title
-    display: none
+  &.is-edit &__content
+    margin: 0 47px
 
   &__toggle
-    position: absolute
-    top: 0
-    bottom: 0
-
-    width: 30px
-    height: 30px
-    margin: auto 0
-
-    border: none
+    position: relative
+    width: 20px
+    height: 20px
     outline: none
     cursor: pointer
-
     appearance: none
 
     &:before
-      display: block
-      width: 30px
-      height: 30px
       content: ""
-      border: 1px solid #ddd
-      border-radius: 50%
-      box-sizing: border-box
-
-    &:checked:after
-      content: '✔'
       position: absolute
-      top: 8px
-      left: 8px
-      line-height: 16px
-      font-size: 16px
-      color: #db4c3f
+      left: 0
+      width: 16px
+      height: 16px
+      border: 2px solid #6d6d6d
+      transition: all 0.1s ease-in-out
+
+    &:checked:before
+      height: 8px
+      border-color: #009688
+      border-top-style: none
+      border-right-style: none
+      transform: rotate(-45deg)
 
   &__delete
-    position: absolute
-    top: 0
-    bottom: 0
-    right: 0
-
-    margin: auto 0
-    width: 30px
-    height: 30px
-
-    font-size: 26px
-    line-height: 30px
-    text-align: center
+    font-size: 36px
+    line-height: 20px
 
     cursor: pointer
     color: #ccc
@@ -79,11 +72,9 @@
     transition: opacity 0.3s, color 0.3s
 
     &:hover
-      color: #000
+      color: #6d6d6d
 
   &__edit
-    width: 100%
-    height: 48px
+    flex-grow: 1
     border: none
-    padding: 0 30px 0 50px
     outline: none

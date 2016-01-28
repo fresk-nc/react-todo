@@ -11,7 +11,7 @@ let TodoItem = React.createClass({
 
     getInitialState: function() {
         return {
-            isEdit: false,
+            isEdit: this.props.todo.isNew,
             editText: this.props.todo.title
         };
     },
@@ -19,36 +19,32 @@ let TodoItem = React.createClass({
     componentDidUpdate: function() {
         if (this.state.isEdit) {
             let input = ReactDOM.findDOMNode(this.refs.editField);
-            input.focus();
             input.setSelectionRange(input.value.length, input.value.length);
         }
     },
 
     render: function() {
-        let todo = this.props.todo;
-
         return (
             <div
                 className={classNames('todo-item', {
-                    'is-complete': todo.complete,
+                    'is-complete': this.props.todo.complete,
                     'is-edit': this.state.isEdit
                 })}>
                 <input
                     className="todo-item__toggle"
                     type="checkbox"
-                    checked={todo.complete}
+                    checked={this.props.todo.complete}
                     onChange={this._handleToggleComplete}
                 />
-                <span className="todo-item__title" onClick={this._handleTitleClick}>
-                    {todo.title}
-                </span>
+                <div className="todo-item__content" onClick={this._handleContentClick}>
+                    {this._renderContent()}
+                </div>
                 <span className="todo-item__delete" onClick={this._handleDeleteClick}>×</span>
-                {this._renderEdit()}
             </div>
         );
     },
 
-    _renderEdit: function() {
+    _renderContent: function() {
         if (this.state.isEdit) {
             return (
                 <input
@@ -58,20 +54,30 @@ let TodoItem = React.createClass({
                     onKeyDown={this._handleKeyDown}
                     onChange={this._handleChange}
                     onBlur={this._handleBlur}
+                    maxLength={80}
+                    autoFocus
                 />
+            );
+        } else {
+            return (
+                <span className="todo-item__title">
+                    {this.props.todo.title}
+                </span>
             );
         }
     },
 
     _handleToggleComplete: function() {
-        TodoActions.toggleComplete(this.props.todo);
+        TodoActions.updateItem(this.props.todo, {
+            complete: !this.props.todo.complete
+        });
     },
 
     _handleDeleteClick: function() {
         TodoActions.deleteItem(this.props.todo);
     },
 
-    _handleTitleClick: function() {
+    _handleContentClick: function() {
         this.setState({
             isEdit: true
         });
@@ -100,15 +106,15 @@ let TodoItem = React.createClass({
 
     _save: function() {
         let newTitle = this.state.editText.trim();
-        let isValidTitle = (newTitle !== '');
 
-        if (isValidTitle) {
-            TodoActions.updateTitle(this.props.todo, newTitle);
-        }
+        TodoActions.updateItem(this.props.todo, {
+            title: newTitle,
+            isNew: false
+        });
 
         this.setState({
             isEdit: false,
-            editText: (isValidTitle) ? newTitle : this.props.todo.title
+            editText: newTitle
         });
     }
 });

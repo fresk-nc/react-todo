@@ -1,5 +1,6 @@
-import ComponentHeader from 'components/Header';
-import ComponentMainSection from 'components/MainSection';
+import ComponentTodoList from 'components/TodoList';
+import TodoActions from 'actions/TodoActions';
+import './index.styl';
 
 export default React.createClass({
 
@@ -8,10 +9,20 @@ export default React.createClass({
     render: function () {
         return (
             <div className="app">
-                <ComponentHeader />
-                <ComponentMainSection />
+                <div className="app__header">
+                    <div className="app__create-button" onClick={this._handleClickCreate}>
+                        +
+                    </div>
+                </div>
+                <div className="app__content">
+                    <ComponentTodoList />
+                </div>
             </div>
         );
+    },
+
+    _handleClickCreate: function() {
+        TodoActions.createItem();
     }
 
 });

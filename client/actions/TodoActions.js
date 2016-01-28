@@ -4,29 +4,18 @@ import ServiceApi from 'services/ServiceApi';
 
 export default {
     createItem,
-    deleteItem,
-    requestItems,
-    toggleComplete,
-    updateTitle
+    readItems,
+    updateItem,
+    deleteItem
 };
 
-function createItem(data) {
+function createItem() {
     AppDispatcher.dispatch({
-        type: TodoConstants.TODO_CREATE,
-        data: data
+        type: TodoConstants.TODO_CREATE
     });
 }
 
-function deleteItem(todoItem) {
-    AppDispatcher.dispatch({
-        type: TodoConstants.TODO_DELETE,
-        data: {
-            id: todoItem.id
-        }
-    });
-}
-
-function requestItems() {
+function readItems() {
     ServiceApi.getItems().then((data) => {
         AppDispatcher.dispatch({
             type: TodoConstants.TODO_ITEMS_RECEIVED,
@@ -35,30 +24,21 @@ function requestItems() {
     });
 }
 
-function toggleComplete(todoItem) {
-    var id = todoItem.id;
-    var actionType;
-
-    if (todoItem.complete) {
-        actionType = TodoConstants.TODO_UNDO_COMPLETE;
-    } else {
-        actionType = TodoConstants.TODO_COMPLETE;
-    }
-
+function updateItem(todoItem, data) {
     AppDispatcher.dispatch({
-        type: actionType,
+        type: TodoConstants.TODO_UPDATE,
         data: {
-            id: id
+            id: todoItem.id,
+            newData: data
         }
     });
 }
 
-function updateTitle(todoItem, title) {
+function deleteItem(todoItem) {
     AppDispatcher.dispatch({
-        type: TodoConstants.TODO_UPDATE_TITLE,
+        type: TodoConstants.TODO_DELETE,
         data: {
-            id: todoItem.id,
-            title: title
+            id: todoItem.id
         }
     });
 }

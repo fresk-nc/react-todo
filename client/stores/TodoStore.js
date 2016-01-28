@@ -14,13 +14,14 @@ class TodoStore extends CommonStore {
         state = data;
     }
 
-    createItem(data) {
+    createItem() {
         let id = this._generateId();
 
         state[id] = {
             id: id,
-            title: data.title,
-            complete: data.complete
+            title: '',
+            complete: false,
+            isNew: true
         };
     }
 
@@ -33,31 +34,15 @@ class TodoStore extends CommonStore {
     }
 
     _generateId() {
-        return Math.random().toString(36).slice(2, 9);
+        return Date.now();
     }
 
     _onDispatch(action) {
         let { data, type } = action;
 
         switch (type) {
-
-            case TodoConstants.TODO_COMPLETE:
-                this.updateItem(data.id, { complete: true });
-                this.emitChange();
-                break;
-
-            case TodoConstants.TODO_UNDO_COMPLETE:
-                this.updateItem(data.id, { complete: false });
-                this.emitChange();
-                break;
-
             case TodoConstants.TODO_CREATE:
-                this.createItem(data);
-                this.emitChange();
-                break;
-
-            case TodoConstants.TODO_DELETE:
-                this.deleteItem(data.id);
+                this.createItem();
                 this.emitChange();
                 break;
 
@@ -66,11 +51,15 @@ class TodoStore extends CommonStore {
                 this.emitChange();
                 break;
 
-            case TodoConstants.TODO_UPDATE_TITLE:
-                this.updateItem(data.id, { title: data.title });
+            case TodoConstants.TODO_UPDATE:
+                this.updateItem(data.id, data.newData);
                 this.emitChange();
                 break;
 
+            case TodoConstants.TODO_DELETE:
+                this.deleteItem(data.id);
+                this.emitChange();
+                break;
         }
     }
 

@@ -15,7 +15,7 @@ let TodoList = React.createClass({
     },
 
     componentDidMount: function() {
-        TodoActions.requestItems();
+        TodoActions.readItems();
         TodoStore.addChangeListener(this._onChange);
     },
 
@@ -48,6 +48,7 @@ let TodoList = React.createClass({
         } else {
             return (
                 <ReactCSSTransitionGroup
+                    className="todo-list__wrap"
                     transitionName="todo-list"
                     transitionEnterTimeout={300}
                     transitionLeaveTimeout={300}>
