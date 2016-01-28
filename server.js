@@ -37,6 +37,10 @@ app.use('/api', (req, res) => {
                 isNew: false
             }
         });
+    } else {
+        res.send({
+            status: 'ok'
+        });
     }
 });
 
