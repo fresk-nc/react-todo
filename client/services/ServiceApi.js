@@ -14,7 +14,7 @@ function updateItem(id, data) {
 function deleteItem(id) {
     return request('delete', {
         id: id
-    })
+    });
 }
 
 export default {
