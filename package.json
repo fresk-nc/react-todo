@@ -33,11 +33,18 @@
     "extract-text-webpack-plugin": "1.0.1",
     "html-webpack-plugin": "1.7.0",
     "husky": "0.10.2",
+    "nodemon": "1.8.1",
     "postcss-loader": "0.8.0",
+    "react-hot-loader": "1.3.0",
+    "style-loader": "0.13.0",
     "stylus-loader": "1.4.3",
-    "webpack": "1.12.9"
+    "webpack": "1.12.9",
+    "webpack-dev-server": "1.14.1"
   },
   "scripts": {
+    "wds": "./node_modules/.bin/webpack-dev-server --inline --hot",
+    "server": "nodemon ./server/app.js",
+    "static": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
     "lint": "./node_modules/.bin/eslint . --no-color",
     "prepush": "npm run lint"
   }

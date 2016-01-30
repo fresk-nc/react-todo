@@ -1,19 +1,8 @@
 var express = require('express');
-var webpack = require('webpack');
-var config = require('./webpack.config');
 var bodyParser = require('body-parser');
 
 var app = express();
-var compiler = webpack(config);
 
-compiler.watch({
-    aggregateTimeout: 300,
-    poll: true
-}, (err, stats) => {
-    console.log(`Rebuild in ${stats.endTime - stats.startTime} ms`); // eslint-disable-line
-});
-
-app.use(express.static('static'));
 app.use(bodyParser.json());
 app.use('/api', (req, res) => {
     if (req.body.method === 'items') {

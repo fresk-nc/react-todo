@@ -25,6 +25,7 @@ var config = {
         index: './index.js'
     },
     output: {
+		filename: '[name].js',
         path: staticPath
     },
     resolve: {
@@ -67,7 +68,8 @@ var config = {
             ReactDOM: 'react-dom'
         }),
         new ExtractTextPlugin('[name].css', {
-            allChunks: true
+            allChunks: true,
+            disable: isDev
         })
     ],
     module: {
@@ -77,12 +79,12 @@ var config = {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loaders: ['react-hot', 'babel'],
                 include: [clientPath]
             },
             {
                 test: /\.styl$/,
-                loader: ExtractTextPlugin.extract('css!postcss!stylus')
+                loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus')
             }
         ]
     },
@@ -92,6 +94,15 @@ var config = {
                 'browsers': ['last 2 versions']
             })
         ];
+    },
+    devServer: {
+        proxy: {
+            '*': 'http://localhost:8000'
+        },
+        watchOptions: {
+            aggregateTimeout: 300,
+            poll: true
+        }
     }
 };
 
