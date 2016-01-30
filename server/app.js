@@ -8,11 +8,11 @@ app.use(bodyParser.json());
 app.use('/api', (req, res) => {
     if (req.body.method === 'items') {
         res.send(items);
+    } else {
+        res.send({
+            status: 'ok'
+        });
     }
-
-    res.send({
-        status: 'ok'
-    });
 });
 
 app.listen(8000, 'localhost', (err) => {
