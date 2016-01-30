@@ -1,5 +1,6 @@
 import TodoActions from 'actions/TodoActions';
 import classNames from 'classnames';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import './index.styl';
 
 const ESCAPE_KEY = 27;
@@ -8,6 +9,8 @@ const ENTER_KEY = 13;
 let TodoItem = React.createClass({
 
     displayName: 'TodoItem',
+
+    mixins: [ PureRenderMixin ],
 
     getInitialState: function() {
         return {

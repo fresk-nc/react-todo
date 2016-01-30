@@ -19,6 +19,7 @@ var config = {
             'react',
             'react-dom',
             'react-addons-css-transition-group',
+            'react-addons-pure-render-mixin',
             'flux/dist/Flux.js',
             'keymirror'
         ],
