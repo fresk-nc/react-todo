@@ -3,4 +3,4 @@ import './styles/index.styl';
 
 ReactDOM.render((
     <ComponentApp />
-), document.getElementById('app'));
+), document.getElementById('root'));

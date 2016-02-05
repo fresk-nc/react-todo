@@ -43,8 +43,8 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "wds": "./node_modules/.bin/webpack-dev-server --inline --hot",
-    "server": "nodemon ./server/app.js",
+    "dev": "./node_modules/.bin/webpack-dev-server --inline --hot",
+    "start": "nodemon ./server/app.js",
     "static": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
     "lint": "./node_modules/.bin/eslint . --no-color",
     "prepush": "npm run lint"
