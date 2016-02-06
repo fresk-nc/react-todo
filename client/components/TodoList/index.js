@@ -23,12 +23,14 @@ let TodoList = React.createClass({
         TodoStore.removeChangeListener(this._onChange);
     },
 
-    render: function() {
-        return (
-            <div className="todo-list">
-                {this._renderContent()}
-            </div>
-        );
+    _onChange: function() {
+        this.setState(this._getTodoState());
+    },
+
+    _getTodoState: function() {
+        return {
+            items: TodoStore.getAll()
+        };
     },
 
     _renderContent() {
@@ -58,14 +60,12 @@ let TodoList = React.createClass({
         }
     },
 
-    _onChange: function() {
-        this.setState(this._getTodoState());
-    },
-
-    _getTodoState: function() {
-        return {
-            items: TodoStore.getAll()
-        };
+    render: function() {
+        return (
+            <div className="todo-list">
+                {this._renderContent()}
+            </div>
+        );
     }
 
 });

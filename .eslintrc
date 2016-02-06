@@ -58,7 +58,23 @@
     "eqeqeq": [
       2,
       "smart"
-    ]
+    ],
+    "react/display-name": 2,
+    "react/forbid-prop-types": [2, {"forbid": ["object", "array", "any"]}],
+    "react/prop-types": 2,
+    "react/jsx-key": 2,
+    "react/jsx-indent": 2,
+    "react/jsx-equals-spacing": 2,
+    "react/jsx-handler-names": 2,
+    "react/jsx-max-props-per-line": [2, {"maximum": 3}],
+    "react/no-direct-mutation-state": 2,
+    "react/no-is-mounted": 2,
+    "react/no-multi-comp": 2,
+    "react/no-deprecated": 2,
+    "react/no-string-refs": 2,
+    "react/no-unknown-property": 2,
+    "react/wrap-multilines": 2,
+    "react/sort-comp": 2
   },
   "env": {
     "es6": true,

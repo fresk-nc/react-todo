@@ -1,5 +1,11 @@
 import request from './request';
 
+export default {
+    getItems,
+    updateItem,
+    deleteItem
+};
+
 function getItems() {
     return request('items');
 }
@@ -16,9 +22,3 @@ function deleteItem(id) {
         id: id
     });
 }
-
-export default {
-    getItems,
-    updateItem,
-    deleteItem
-};

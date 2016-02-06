@@ -6,9 +6,18 @@ import './index.styl';
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
-let TodoItem = React.createClass({
+export default React.createClass({
 
     displayName: 'TodoItem',
+
+    propTypes: {
+        todo: React.PropTypes.shape({
+            id: React.PropTypes.number,
+            title: React.PropTypes.string,
+            complete: React.PropTypes.bool,
+            isNew: React.PropTypes.bool
+        })
+    },
 
     mixins: [ PureRenderMixin ],
 
@@ -21,56 +30,12 @@ let TodoItem = React.createClass({
 
     componentDidUpdate: function() {
         if (this.state.isEdit) {
-            let input = ReactDOM.findDOMNode(this.refs.editField);
-            input.setSelectionRange(input.value.length, input.value.length);
+            let valueLength = this._editField.value.length;
+            this._editField.setSelectionRange(valueLength, valueLength);
         }
     },
 
-    render: function() {
-        return (
-            <div
-                className={classNames('todo-item', {
-                    'is-complete': this.props.todo.complete,
-                    'is-edit': this.state.isEdit
-                })}>
-                <input
-                    className="todo-item__toggle"
-                    type="checkbox"
-                    checked={this.props.todo.complete}
-                    onChange={this._handleToggleComplete}
-                />
-                <div className="todo-item__content" onClick={this._handleContentClick}>
-                    {this._renderContent()}
-                </div>
-                <span className="todo-item__delete" onClick={this._handleDeleteClick}>×</span>
-            </div>
-        );
-    },
-
-    _renderContent: function() {
-        if (this.state.isEdit) {
-            return (
-                <input
-                    ref="editField"
-                    className="todo-item__edit"
-                    value={this.state.editText}
-                    onKeyDown={this._handleKeyDown}
-                    onChange={this._handleChange}
-                    onBlur={this._handleBlur}
-                    maxLength={80}
-                    autoFocus
-                />
-            );
-        } else {
-            return (
-                <span className="todo-item__title">
-                    {this.props.todo.title}
-                </span>
-            );
-        }
-    },
-
-    _handleToggleComplete: function() {
+    _handleCompleteToggle: function() {
         TodoActions.updateItem(this.props.todo, {
             complete: !this.props.todo.complete
         });
@@ -119,13 +84,50 @@ let TodoItem = React.createClass({
             isEdit: false,
             editText: newTitle
         });
+    },
+
+    _renderContent: function() {
+        if (this.state.isEdit) {
+            return (
+                <input
+                    ref={(c) => this._editField = c}
+                    className="todo-item__edit"
+                    value={this.state.editText}
+                    onKeyDown={this._handleKeyDown}
+                    onChange={this._handleChange}
+                    onBlur={this._handleBlur}
+                    maxLength={80}
+                    autoFocus
+                    />
+            );
+        } else {
+            return (
+                <span className="todo-item__title">
+                    {this.props.todo.title}
+                </span>
+            );
+        }
+    },
+
+    render: function() {
+        return (
+            <div
+                className={classNames('todo-item', {
+                    'is-complete': this.props.todo.complete,
+                    'is-edit': this.state.isEdit
+                })}>
+                <input
+                    className="todo-item__toggle"
+                    type="checkbox"
+                    checked={this.props.todo.complete}
+                    onChange={this._handleCompleteToggle}
+                    />
+                <div className="todo-item__content" onClick={this._handleContentClick}>
+                    {this._renderContent()}
+                </div>
+                <span className="todo-item__delete" onClick={this._handleDeleteClick}>×</span>
+            </div>
+        );
     }
+
 });
-
-if (NODE_ENV === 'development') {
-    TodoItem.propTypes = {
-        todo: React.PropTypes.object.isRequired
-    };
-}
-
-export default TodoItem;

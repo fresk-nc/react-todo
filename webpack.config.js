@@ -62,7 +62,8 @@ var config = {
             filename: 'vendor.js'
         }),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(nodeEnv)
+            NODE_ENV: JSON.stringify(nodeEnv),
+            'process.env.NODE_ENV': JSON.stringify(nodeEnv)
         }),
         new webpack.ProvidePlugin({
             React: 'react',

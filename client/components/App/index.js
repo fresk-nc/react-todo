@@ -6,11 +6,15 @@ export default React.createClass({
 
     displayName: 'App',
 
+    _handleCreateClick: function() {
+        TodoActions.createItem();
+    },
+
     render: function () {
         return (
             <div className="app">
                 <div className="app__header">
-                    <div className="app__create-button" onClick={this._handleClickCreate}>
+                    <div className="app__create-button" onClick={this._handleCreateClick}>
                         +
                     </div>
                 </div>
@@ -19,10 +23,6 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _handleClickCreate: function() {
-        TodoActions.createItem();
     }
 
 });
