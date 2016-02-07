@@ -1,6 +1,7 @@
 import TodoActions from 'actions/TodoActions';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import './index.styl';
 
 const ESCAPE_KEY = 27;
@@ -19,7 +20,7 @@ export default React.createClass({
         })
     },
 
-    mixins: [ PureRenderMixin ],
+    mixins: [ PureRenderMixin, LinkedStateMixin ],
 
     getInitialState: function() {
         return {
@@ -62,12 +63,6 @@ export default React.createClass({
         }
     },
 
-    _handleChange: function(event) {
-        this.setState({
-            editText: event.target.value
-        });
-    },
-
     _handleBlur: function() {
         this._save();
     },
@@ -92,9 +87,8 @@ export default React.createClass({
                 <input
                     ref={(c) => this._editField = c}
                     className="todo-item__edit"
-                    value={this.state.editText}
+                    valueLink={this.linkState('editText')}
                     onKeyDown={this._handleKeyDown}
-                    onChange={this._handleChange}
                     onBlur={this._handleBlur}
                     maxLength={80}
                     autoFocus
