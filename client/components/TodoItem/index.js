@@ -2,7 +2,7 @@ import TodoActions from 'actions/TodoActions';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import './index.styl';
+import styles from './TodoItem.styl';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
@@ -86,7 +86,7 @@ export default React.createClass({
             return (
                 <input
                     ref={(c) => this._editField = c}
-                    className="todo-item__edit"
+                    className={styles.editField}
                     valueLink={this.linkState('editText')}
                     onKeyDown={this._handleKeyDown}
                     onBlur={this._handleBlur}
@@ -96,7 +96,7 @@ export default React.createClass({
             );
         } else {
             return (
-                <span className="todo-item__title">
+                <span className={styles.title}>
                     {this.props.todo.title}
                 </span>
             );
@@ -106,20 +106,21 @@ export default React.createClass({
     render: function() {
         return (
             <div
-                className={classNames('todo-item', {
-                    'is-complete': this.props.todo.complete,
-                    'is-edit': this.state.isEdit
+                className={classNames({
+                    [styles.common]: !this.props.todo.complete && !this.state.isEdit,
+                    [styles.completed]: this.props.todo.complete && !this.state.isEdit,
+                    [styles.editable]: this.state.isEdit
                 })}>
                 <input
-                    className="todo-item__toggle"
+                    className={styles.toggler}
                     type="checkbox"
                     checked={this.props.todo.complete}
                     onChange={this._handleCompleteToggle}
                     />
-                <div className="todo-item__content" onClick={this._handleContentClick}>
+                <div className={styles.content} onClick={this._handleContentClick}>
                     {this._renderContent()}
                 </div>
-                <span className="todo-item__delete" onClick={this._handleDeleteClick}>×</span>
+                <span className={styles.delete} onClick={this._handleDeleteClick}>×</span>
             </div>
         );
     }

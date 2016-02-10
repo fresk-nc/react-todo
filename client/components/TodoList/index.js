@@ -1,8 +1,8 @@
 import TodoStore from 'stores/TodoStore';
 import TodoActions from 'actions/TodoActions';
-import ComponentTodoItem from 'components/TodoItem';
+import TodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import './index.styl';
+import styles from './TodoList.styl';
 
 let TodoList = React.createClass({
 
@@ -33,24 +33,25 @@ let TodoList = React.createClass({
         };
     },
 
-    _renderContent() {
+    render: function() {
         let items = this.state.items;
         let nodes = [];
 
         for (var key in items) {
-            nodes.push(<ComponentTodoItem key={key} todo={items[key]} />);
+            nodes.push(<TodoItem key={key} todo={items[key]} />);
         }
 
         if (items !== null && nodes.length === 0) {
             return (
-                <div className="todo-list__empty">
+                <div className={styles.empty}>
                     Now is the good time to do something
                 </div>
             );
         } else {
             return (
                 <ReactCSSTransitionGroup
-                    className="todo-list__wrap"
+                    className={styles.wrap}
+                    component="div"
                     transitionName="todo-list"
                     transitionEnterTimeout={300}
                     transitionLeaveTimeout={300}>
@@ -58,14 +59,6 @@ let TodoList = React.createClass({
                 </ReactCSSTransitionGroup>
             );
         }
-    },
-
-    render: function() {
-        return (
-            <div className="todo-list">
-                {this._renderContent()}
-            </div>
-        );
     }
 
 });

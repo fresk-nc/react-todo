@@ -1,0 +1,86 @@
+.common
+  display: flex
+  align-items: center
+
+  box-sizing: border-box
+  min-height: 62px
+  padding: 6px 24px
+  box-shadow: 0 1px #b6b6b6
+
+  &:last-child
+    border-bottom: none
+
+  &:hover .delete
+    opacity: 1
+
+.completed
+  composes: common
+
+  & .title
+    text-decoration: line-through
+    color: #727272
+
+.editable
+  composes: common
+
+  .content
+    margin: 0 47px
+
+  .toggler
+    display: none
+
+  .delete
+    display: none
+
+.content
+  display: flex
+  align-self: stretch
+  flex-grow: 1
+  margin: 0 28px
+  cursor: pointer
+
+.title
+  align-self: center
+  transition: color 0.3s
+
+.toggler
+  position: relative
+  width: 20px
+  height: 20px
+  outline: none
+  cursor: pointer
+  appearance: none
+
+  &:before
+    content: ""
+    position: absolute
+    left: 0
+    width: 16px
+    height: 16px
+    border: 2px solid #6d6d6d
+    transition: all 0.1s ease-in-out
+
+  &:checked:before
+    height: 8px
+    border-color: #009688
+    border-top-style: none
+    border-right-style: none
+    transform: rotate(-45deg)
+
+.delete
+  font-size: 36px
+  line-height: 20px
+
+  cursor: pointer
+  color: #ccc
+
+  opacity: 0
+  transition: opacity 0.3s, color 0.3s
+
+  &:hover
+    color: #6d6d6d
+
+.editField
+  flex-grow: 1
+  border: none
+  outline: none

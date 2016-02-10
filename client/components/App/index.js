@@ -1,25 +1,19 @@
-import ComponentTodoList from 'components/TodoList';
-import TodoActions from 'actions/TodoActions';
-import './index.styl';
+import TodoList from 'components/TodoList';
+import CreateButton from 'components/CreateButton';
+import styles from './App.styl';
 
 export default React.createClass({
 
     displayName: 'App',
 
-    _handleCreateClick: function() {
-        TodoActions.createItem();
-    },
-
     render: function () {
         return (
-            <div className="app">
-                <div className="app__header">
-                    <div className="app__create-button" onClick={this._handleCreateClick}>
-                        +
-                    </div>
+            <div>
+                <div className={styles.header}>
+                    <CreateButton />
                 </div>
-                <div className="app__content">
-                    <ComponentTodoList />
+                <div className={styles.content}>
+                    <TodoList />
                 </div>
             </div>
         );

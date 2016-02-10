@@ -1,0 +1,22 @@
+.wrap
+  display: flex
+  flex-grow: 1
+  flex-direction: column
+
+.empty
+  font-size: 20px
+  margin: auto
+
+:global .todo-list-enter
+  opacity: 0.01
+
+:global .todo-list-enter-active
+  opacity: 1
+  transition: opacity 0.3s ease-in
+
+:global .todo-list-leave
+  opacity: 1
+
+:global .todo-list-leave-active
+  opacity: 0.01
+  transition: opacity 0.3s ease-in
