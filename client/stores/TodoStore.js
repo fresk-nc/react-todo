@@ -11,11 +11,11 @@ class TodoStore extends CommonStore {
         return state;
     }
 
-    fillState(data) {
+    _fillState(data) {
         state = state.merge(Immutable.fromJS(data));
     }
 
-    createItem() {
+    _createItem() {
         let id = this._generateId();
         let data = {
             id: id,
@@ -27,13 +27,13 @@ class TodoStore extends CommonStore {
         state = state.set(id, Immutable.fromJS(data));
     }
 
-    updateItem(id, data) {
+    _updateItem(id, data) {
         state = state.update(id, (todo) => {
             return todo.merge(Immutable.fromJS(data));
         });
     }
 
-    deleteItem(id) {
+    _deleteItem(id) {
         state = state.delete(id);
     }
 
@@ -46,22 +46,22 @@ class TodoStore extends CommonStore {
 
         switch (type) {
             case TodoConstants.TODO_CREATE:
-                this.createItem();
+                this._createItem();
                 this.emitChange();
                 break;
 
             case TodoConstants.TODO_ITEMS_RECEIVED:
-                this.fillState(data);
+                this._fillState(data);
                 this.emitChange();
                 break;
 
             case TodoConstants.TODO_UPDATE:
-                this.updateItem(data.id, data.newData);
+                this._updateItem(data.id, data.newData);
                 this.emitChange();
                 break;
 
             case TodoConstants.TODO_DELETE:
-                this.deleteItem(data.id);
+                this._deleteItem(data.id);
                 this.emitChange();
                 break;
         }
