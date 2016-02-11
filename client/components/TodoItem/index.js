@@ -12,20 +12,18 @@ export default React.createClass({
     displayName: 'TodoItem',
 
     propTypes: {
-        todo: React.PropTypes.shape({
-            id: React.PropTypes.number,
-            title: React.PropTypes.string,
-            complete: React.PropTypes.bool,
-            isNew: React.PropTypes.bool
-        })
+        id: React.PropTypes.string.isRequired,
+        title: React.PropTypes.string.isRequired,
+        isCompleted: React.PropTypes.bool.isRequired,
+        isNew: React.PropTypes.bool.isRequired
     },
 
     mixins: [ PureRenderMixin, LinkedStateMixin ],
 
     getInitialState: function() {
         return {
-            isEdit: this.props.todo.isNew,
-            editText: this.props.todo.title
+            isEdit: this.props.isNew,
+            editText: this.props.title
         };
     },
 
@@ -37,13 +35,13 @@ export default React.createClass({
     },
 
     _handleCompleteToggle: function() {
-        TodoActions.updateItem(this.props.todo, {
-            complete: !this.props.todo.complete
+        TodoActions.updateItem(this.props.id, {
+            isCompleted: !this.props.isCompleted
         });
     },
 
     _handleDeleteClick: function() {
-        TodoActions.deleteItem(this.props.todo);
+        TodoActions.deleteItem(this.props.id);
     },
 
     _handleContentClick: function() {
@@ -56,7 +54,7 @@ export default React.createClass({
         if (event.which === ESCAPE_KEY) {
             this.setState({
                 isEdit: false,
-                editText: this.props.todo.title
+                editText: this.props.title
             });
         } else if (event.which === ENTER_KEY) {
             this._save();
@@ -70,7 +68,7 @@ export default React.createClass({
     _save: function() {
         let newTitle = this.state.editText.trim();
 
-        TodoActions.updateItem(this.props.todo, {
+        TodoActions.updateItem(this.props.id, {
             title: newTitle,
             isNew: false
         });
@@ -97,7 +95,7 @@ export default React.createClass({
         } else {
             return (
                 <span className={styles.title}>
-                    {this.props.todo.title}
+                    {this.props.title}
                 </span>
             );
         }
@@ -107,14 +105,14 @@ export default React.createClass({
         return (
             <div
                 className={classNames({
-                    [styles.common]: !this.props.todo.complete && !this.state.isEdit,
-                    [styles.completed]: this.props.todo.complete && !this.state.isEdit,
+                    [styles.common]: !this.props.isCompleted && !this.state.isEdit,
+                    [styles.completed]: this.props.isCompleted && !this.state.isEdit,
                     [styles.editable]: this.state.isEdit
                 })}>
                 <input
                     className={styles.toggler}
                     type="checkbox"
-                    checked={this.props.todo.complete}
+                    checked={this.props.isCompleted}
                     onChange={this._handleCompleteToggle}
                     />
                 <div className={styles.content} onClick={this._handleContentClick}>

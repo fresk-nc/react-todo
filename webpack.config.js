@@ -22,6 +22,7 @@ var config = {
             'react-addons-pure-render-mixin',
             'react-addons-linked-state-mixin',
             'flux/dist/Flux.js',
+            'immutable/dist/immutable.js',
             'keymirror'
         ],
         index: './index.js'
@@ -77,7 +78,8 @@ var config = {
     ],
     module: {
         noParse: [
-            /node_modules[\/\\]flux[\/\\]dist[\/\\]Flux.js/
+            /node_modules[\/\\]flux[\/\\]dist[\/\\]Flux.js/,
+            /node_modules[\/\\]immutable[\/\\]dist[\/\\]immutable.js/
         ],
         loaders: [
             {

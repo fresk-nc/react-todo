@@ -24,25 +24,25 @@ function readItems() {
     });
 }
 
-function updateItem(todoItem, data) {
-    ServiceApi.updateItem(todoItem.id, data);
+function updateItem(id, data) {
+    ServiceApi.updateItem(id, data);
 
     AppDispatcher.dispatch({
         type: TodoConstants.TODO_UPDATE,
         data: {
-            id: todoItem.id,
+            id: id,
             newData: data
         }
     });
 }
 
-function deleteItem(todoItem) {
-    ServiceApi.deleteItem(todoItem.id);
+function deleteItem(id) {
+    ServiceApi.deleteItem(id);
 
     AppDispatcher.dispatch({
         type: TodoConstants.TODO_DELETE,
         data: {
-            id: todoItem.id
+            id: id
         }
     });
 }

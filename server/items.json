@@ -1,26 +1,26 @@
 {
   "1": {
-    "id": 1,
+    "id": "1",
     "title": "buy eggs",
-    "complete": true,
+    "isCompleted": true,
     "isNew": false
   },
   "2": {
-    "id": 2,
+    "id": "2",
     "title": "buy milk",
-    "complete": false,
+    "isCompleted": false,
     "isNew": false
   },
   "3": {
-    "id": 3,
+    "id": "3",
     "title": "buy bread",
-    "complete": false,
+    "isCompleted": false,
     "isNew": false
   },
   "4": {
-    "id": 4,
+    "id": "4",
     "title": "take over the world",
-    "complete": false,
+    "isCompleted": false,
     "isNew": false
   }
 }

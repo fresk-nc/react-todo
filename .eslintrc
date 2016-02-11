@@ -52,7 +52,14 @@
       2,
       {
         "newIsCap": true,
-        "capIsNew": true
+        "capIsNew": true,
+        "capIsNewExceptions": [
+          "Immutable.List",
+          "Immutable.Map",
+          "Immutable.OrderedMap",
+          "Immutable.Record",
+          "Immutable.Set"
+        ]
       }
     ],
     "eqeqeq": [

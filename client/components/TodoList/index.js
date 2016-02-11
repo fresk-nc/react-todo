@@ -9,9 +9,7 @@ let TodoList = React.createClass({
     displayName: 'TodoList',
 
     getInitialState: function() {
-        return {
-            items: null
-        };
+        return this._getTodoState();
     },
 
     componentDidMount: function() {
@@ -29,36 +27,31 @@ let TodoList = React.createClass({
 
     _getTodoState: function() {
         return {
-            items: TodoStore.getAll()
+            items: TodoStore.getItems()
         };
     },
 
     render: function() {
-        let items = this.state.items;
-        let nodes = [];
-
-        for (var key in items) {
-            nodes.push(<TodoItem key={key} todo={items[key]} />);
-        }
-
-        if (items !== null && nodes.length === 0) {
-            return (
-                <div className={styles.empty}>
-                    Now is the good time to do something
-                </div>
-            );
-        } else {
-            return (
-                <ReactCSSTransitionGroup
-                    className={styles.wrap}
-                    component="div"
-                    transitionName="todo-list"
-                    transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}>
-                    {nodes}
-                </ReactCSSTransitionGroup>
-            );
-        }
+        return (
+            <ReactCSSTransitionGroup
+                className={styles.wrap}
+                component="div"
+                transitionName="todo-list"
+                transitionEnterTimeout={300}
+                transitionLeaveTimeout={300}>
+                {this.state.items.valueSeq().map((item) => {
+                    return (
+                        <TodoItem
+                            key={item.get('id')}
+                            id={item.get('id')}
+                            title={item.get('title')}
+                            isCompleted={item.get('isCompleted')}
+                            isNew={item.get('isNew')}
+                        />
+                    );
+                })}
+            </ReactCSSTransitionGroup>
+        );
     }
 
 });

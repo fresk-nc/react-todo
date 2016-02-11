@@ -1,40 +1,44 @@
 import CommonStore from 'stores/CommonStore';
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
+import Immutable from 'immutable';
 
-let state = {};
+let state = Immutable.OrderedMap();
 
 class TodoStore extends CommonStore {
 
-    getAll() {
+    getItems() {
         return state;
     }
 
     fillState(data) {
-        state = data;
+        state = state.merge(Immutable.fromJS(data));
     }
 
     createItem() {
         let id = this._generateId();
-
-        state[id] = {
+        let data = {
             id: id,
             title: '',
-            complete: false,
+            isCompleted: false,
             isNew: true
         };
+
+        state = state.set(id, Immutable.fromJS(data));
     }
 
     updateItem(id, data) {
-        state[id] = Object.assign({}, state[id], data);
+        state = state.update(id, (todo) => {
+            return todo.merge(Immutable.fromJS(data));
+        });
     }
 
     deleteItem(id) {
-        delete state[id];
+        state = state.delete(id);
     }
 
     _generateId() {
-        return Date.now();
+        return String(Date.now());
     }
 
     _onDispatch(action) {
