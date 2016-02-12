@@ -28,7 +28,7 @@ var config = {
         index: './index.js'
     },
     output: {
-		filename: '[name].js',
+        filename: isDev ? '[name].js' : '[chunkhash]-[name].js',
         path: staticPath
     },
     resolve: {
@@ -61,7 +61,7 @@ var config = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'vendor.js'
+            filename: isDev ? '[name].js' : '[chunkhash]-[name].js'
         }),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(nodeEnv),
@@ -71,7 +71,7 @@ var config = {
             React: 'react',
             ReactDOM: 'react-dom'
         }),
-        new ExtractTextPlugin('[name].css', {
+        new ExtractTextPlugin(isDev ? '[name].css' : '[chunkhash]-[name].css', {
             allChunks: true,
             disable: isDev
         })
