@@ -84,7 +84,7 @@ var config = {
         loaders: [
             {
                 test: /\.js$/,
-                loaders: ['react-hot', 'babel'],
+                loaders: isDev ? ['react-hot', 'babel'] : ['babel'],
                 include: [clientPath]
             },
             {
