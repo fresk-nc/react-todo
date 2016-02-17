@@ -112,6 +112,12 @@
     "module": false,
     "exports": false,
     "require": false,
-    "NODE_ENV": false
+    "NODE_ENV": false,
+    "describe": false,
+    "it": false,
+    "expect": false,
+    "sinon": false,
+    "beforeEach": false,
+    "afterEach": false
   }
 }

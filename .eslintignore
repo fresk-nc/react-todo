@@ -3,5 +3,6 @@
 node_modules/
 static/
 webpack.config.js
+karma.conf.js
 package.json
 **/.*
