@@ -3,16 +3,14 @@ import AppDispatcher from 'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
 import Immutable from 'immutable';
 
-let state = Immutable.OrderedMap();
-
 class TodoStore extends CommonStore {
 
     getItems() {
-        return state;
+        return this._state;
     }
 
     _fillState(data) {
-        state = state.merge(Immutable.fromJS(data));
+        this._state = this._state.merge(Immutable.fromJS(data));
     }
 
     _createItem() {
@@ -24,21 +22,25 @@ class TodoStore extends CommonStore {
             isNew: true
         };
 
-        state = state.set(id, Immutable.fromJS(data));
+        this._state = this._state.set(id, Immutable.fromJS(data));
     }
 
     _updateItem(id, data) {
-        state = state.update(id, (todo) => {
+        this._state = this._state.update(id, (todo) => {
             return todo.merge(Immutable.fromJS(data));
         });
     }
 
     _deleteItem(id) {
-        state = state.delete(id);
+        this._state = this._state.delete(id);
     }
 
     _generateId() {
         return String(Date.now());
+    }
+
+    _resetState() {
+        this._state = Immutable.OrderedMap();
     }
 
     _onDispatch(action) {

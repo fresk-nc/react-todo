@@ -5,7 +5,10 @@ const EVENT_CHANGE = 'change';
 export default class CommonStore extends EventEmitter {
     constructor(dispatcher) {
         super();
-        dispatcher.register((action) => {
+
+        this._resetState();
+
+        this._dispatchToken = dispatcher.register((action) => {
             this._onDispatch(action);
         });
     }
@@ -22,5 +25,17 @@ export default class CommonStore extends EventEmitter {
         this.removeListener(EVENT_CHANGE, callback);
     }
 
+    getDispatchToken() {
+        return this._dispatchToken;
+    }
+
+    /**
+     * @override
+     */
+    _resetState() {}
+
+    /**
+     * @override
+     */
     _onDispatch() {}
 }
