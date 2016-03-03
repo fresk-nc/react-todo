@@ -57,6 +57,7 @@
     "build": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
     "lint": "./node_modules/.bin/eslint --no-color",
     "test": "./node_modules/karma/bin/karma start",
-    "precommit": "./githooks/pre-commit.sh"
+    "precommit": "./githooks/pre-commit.sh",
+    "prepush": "npm test"
   }
 }
