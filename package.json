@@ -52,9 +52,9 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --inline --hot",
+    "watch": "./node_modules/.bin/webpack-dev-server --inline --hot",
     "start": "nodemon ./server/app.js",
-    "static": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
+    "build": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
     "lint": "./node_modules/.bin/eslint --no-color",
     "test": "./node_modules/karma/bin/karma start",
     "precommit": "./githooks/pre-commit.sh"
