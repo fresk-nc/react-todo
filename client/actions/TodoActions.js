@@ -6,7 +6,9 @@ export default {
     createItem,
     readItems,
     updateItem,
-    deleteItem
+    deleteItem,
+    deleteItemFromList,
+    undoDeleteItem
 };
 
 function createItem() {
@@ -38,7 +40,13 @@ function updateItem(id, data) {
 
 function deleteItem(id) {
     ServiceApi.deleteItem(id);
+}
 
+function undoDeleteItem(id) {
+    ServiceApi.undoDeleteItem(id);
+}
+
+function deleteItemFromList(id) {
     AppDispatcher.dispatch({
         type: TodoConstants.TODO_DELETE,
         data: {

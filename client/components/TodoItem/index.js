@@ -6,6 +6,9 @@ import styles from './TodoItem.styl';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
+const DELAY_AFTER_DELETE = 500;
+
+let timer;
 
 export default React.createClass({
 
@@ -23,6 +26,7 @@ export default React.createClass({
     getInitialState: function() {
         return {
             isEdit: this.props.isNew,
+            isRemoved: false,
             editText: this.props.title
         };
     },
@@ -42,6 +46,10 @@ export default React.createClass({
 
     _handleDeleteClick: function() {
         TodoActions.deleteItem(this.props.id);
+
+        this.setState({
+            isRemoved: true
+        });
     },
 
     _handleContentClick: function() {
@@ -63,6 +71,28 @@ export default React.createClass({
 
     _handleBlur: function() {
         this._save();
+    },
+
+    _handleUndoDeleteClick: function() {
+        this._stopDeleteFromList();
+
+        TodoActions.undoDeleteItem(this.props.id);
+
+        this.setState({
+            isRemoved: false
+        });
+    },
+
+    _startDeleteFromList: function() {
+        if (this.state.isRemoved) {
+            timer = setTimeout(() => {
+                TodoActions.deleteItemFromList(this.props.id);
+            }, DELAY_AFTER_DELETE);
+        }
+    },
+
+    _stopDeleteFromList: function() {
+        clearTimeout(timer);
     },
 
     _save: function() {
@@ -103,22 +133,40 @@ export default React.createClass({
 
     render: function() {
         return (
-            <div
-                className={classNames({
-                    [styles.common]: !this.props.isCompleted && !this.state.isEdit,
-                    [styles.completed]: this.props.isCompleted && !this.state.isEdit,
-                    [styles.editable]: this.state.isEdit
-                })}>
-                <input
-                    className={styles.toggler}
-                    type="checkbox"
-                    checked={this.props.isCompleted}
-                    onChange={this._handleCompleteToggle}
-                    />
-                <div className={styles.content} onClick={this._handleContentClick}>
-                    {this._renderContent()}
+            <div className={styles.wrap}>
+
+                <div
+                    className={classNames({
+                        [styles.common]: !this.props.isCompleted && !this.state.isEdit && !this.state.isRemoved,
+                        [styles.completed]: this.props.isCompleted && !this.state.isEdit && !this.state.isRemoved,
+                        [styles.editable]: this.state.isEdit && !this.state.isRemoved,
+                        [styles.removed]: this.state.isRemoved
+                    })}>
+                    <input
+                        className={styles.toggler}
+                        type="checkbox"
+                        checked={this.props.isCompleted}
+                        onChange={this._handleCompleteToggle}
+                        />
+                    <div className={styles.content} onClick={this._handleContentClick}>
+                        {this._renderContent()}
+                    </div>
+                    <span className={styles.delete} onClick={this._handleDeleteClick}>×</span>
                 </div>
-                <span className={styles.delete} onClick={this._handleDeleteClick}>×</span>
+
+                <div
+                    className={styles.undoWrapper}
+                    onMouseEnter={this._stopDeleteFromList}
+                    onMouseLeave={this._startDeleteFromList}
+                    >
+                    <span>
+                        Removed
+                    </span>
+                    <span className={styles.undo} onClick={this._handleUndoDeleteClick}>
+                        UNDO
+                    </span>
+                </div>
+
             </div>
         );
     }

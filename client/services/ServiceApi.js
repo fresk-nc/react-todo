@@ -3,7 +3,8 @@ import request from './request';
 export default {
     getItems,
     updateItem,
-    deleteItem
+    deleteItem,
+    undoDeleteItem
 };
 
 function getItems() {
@@ -19,6 +20,12 @@ function updateItem(id, data) {
 
 function deleteItem(id) {
     return request('delete', {
+        id: id
+    });
+}
+
+function undoDeleteItem(id) {
+    return request('undo_delete', {
         id: id
     });
 }

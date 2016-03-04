@@ -22,6 +22,7 @@ describe('Component TodoItem', () => {
 
         this.sinon.stub(TodoActions, 'updateItem');
         this.sinon.stub(TodoActions, 'deleteItem');
+        this.sinon.stub(TodoActions, 'undoDeleteItem');
     });
 
     it('should exists', function() {
@@ -175,6 +176,22 @@ describe('Component TodoItem', () => {
 
         expect(TodoActions.deleteItem).to.have.callCount(1);
         expect(TodoActions.deleteItem).to.be.calledWith(this.mockProps.id);
+    });
+
+    it('should render the undo-delete button', function() {
+        const component = renderComponent(this.mockProps);
+        const undoDeleteButton = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.undo);
+
+        expect(undoDeleteButton.length).to.be.equal(1);
+    });
+
+    it('should call action of undo-delete by clicking on the undo button', function() {
+        const component = renderComponent(this.mockProps);
+
+        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.undo));
+
+        expect(TodoActions.undoDeleteItem).to.have.callCount(1);
+        expect(TodoActions.undoDeleteItem).to.be.calledWith(this.mockProps.id);
     });
 
 });

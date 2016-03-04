@@ -1,17 +1,32 @@
+.wrap
+  position: relative
+  overflow: hidden
+  height: 62px
+  background: #DDD
+  border-bottom: 1px solid #B6B6B6
+
 .common
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+
   display: flex
   align-items: center
-
   box-sizing: border-box
-  min-height: 62px
+  width: 100%
   padding: 6px 24px
-  box-shadow: 0 1px #b6b6b6
 
-  &:last-child
-    border-bottom: none
+  background: #FFF
+
+  transition: left 0.3s
 
   &:hover .delete
     opacity: 1
+
+.removed
+  composes: common
+  left: -100%
 
 .completed
   composes: common
@@ -57,7 +72,7 @@
     left: 0
     width: 16px
     height: 16px
-    border: 2px solid #6d6d6d
+    border: 2px solid #6D6D6D
     transition: all 0.1s ease-in-out
 
   &:checked:before
@@ -78,9 +93,20 @@
   transition: opacity 0.3s, color 0.3s
 
   &:hover
-    color: #6d6d6d
+    color: #6D6D6D
 
 .editField
   flex-grow: 1
   border: none
   outline: none
+
+.undoWrapper
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 100%
+  padding: 0 24px
+
+.undo
+  cursor: pointer
+  font-weight: bold
