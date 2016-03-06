@@ -97,6 +97,15 @@ describe('Component TodoItem', () => {
         expect(editField.length).to.be.equal(1);
     });
 
+    it('should render the edit field with todo title, after clicking on the content', function() {
+        const component = renderComponent(this.mockProps);
+
+        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
+        const editField = TestUtils.findRenderedDOMComponentWithClass(component, styles.editField);
+
+        expect(editField.value).to.be.equal(this.mockProps.title);
+    });
+
     it('should be able to replace the edit field to the title by pressing on the escape', function() {
         const component = renderComponent(this.mockProps);
 
