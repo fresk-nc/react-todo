@@ -1,15 +1,13 @@
 import TodoActions from 'actions/TodoActions';
 import styles from './CreateButton.styl';
 
-export default React.createClass({
+class CreateButton extends React.Component {
 
-    displayName: 'CreateButton',
-
-    _handleCreateClick: function() {
+    _handleCreateClick() {
         TodoActions.createItem();
-    },
+    }
 
-    render: function () {
+    render() {
         return (
             <span className={styles.common} onClick={this._handleCreateClick}>
                 +
@@ -17,4 +15,8 @@ export default React.createClass({
         );
     }
 
-});
+}
+
+CreateButton.displayName = 'CreateButton';
+
+export default CreateButton;

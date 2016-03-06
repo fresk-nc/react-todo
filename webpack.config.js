@@ -20,7 +20,6 @@ var config = {
             'react-dom',
             'react-addons-css-transition-group',
             'react-addons-pure-render-mixin',
-            'react-addons-linked-state-mixin',
             'flux/dist/Flux.js',
             'immutable/dist/immutable.js',
             'keymirror'

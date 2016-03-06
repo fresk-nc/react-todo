@@ -4,34 +4,34 @@ import TodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import styles from './TodoList.styl';
 
-let TodoList = React.createClass({
+class TodoList extends React.Component {
 
-    displayName: 'TodoList',
+    constructor() {
+        super();
+        this.state = this._getTodoState();
+        this._onChange = this._onChange.bind(this);
+    }
 
-    getInitialState: function() {
-        return this._getTodoState();
-    },
-
-    componentDidMount: function() {
+    componentDidMount() {
         TodoActions.readItems();
         TodoStore.addChangeListener(this._onChange);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         TodoStore.removeChangeListener(this._onChange);
-    },
+    }
 
-    _onChange: function() {
+    _onChange() {
         this.setState(this._getTodoState());
-    },
+    }
 
-    _getTodoState: function() {
+    _getTodoState() {
         return {
             items: TodoStore.getItems()
         };
-    },
+    }
 
-    render: function() {
+    render() {
         return (
             <ReactCSSTransitionGroup
                 className={styles.wrap}
@@ -47,13 +47,15 @@ let TodoList = React.createClass({
                             title={item.get('title')}
                             isCompleted={item.get('isCompleted')}
                             isNew={item.get('isNew')}
-                        />
+                            />
                     );
                 })}
             </ReactCSSTransitionGroup>
         );
     }
 
-});
+}
+
+TodoList.displayName = 'TodoList';
 
 export default TodoList;

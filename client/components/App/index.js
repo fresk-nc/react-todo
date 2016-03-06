@@ -2,11 +2,9 @@ import TodoList from 'components/TodoList';
 import CreateButton from 'components/CreateButton';
 import styles from './App.styl';
 
-export default React.createClass({
+class App extends React.Component {
 
-    displayName: 'App',
-
-    render: function () {
+    render() {
         return (
             <div>
                 <div className={styles.header}>
@@ -19,4 +17,8 @@ export default React.createClass({
         );
     }
 
-});
+}
+
+App.displayName = 'App';
+
+export default App;

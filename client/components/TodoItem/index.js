@@ -1,7 +1,6 @@
 import TodoActions from 'actions/TodoActions';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import styles from './TodoItem.styl';
 
 const ESCAPE_KEY = 27;
@@ -10,55 +9,63 @@ const DELAY_AFTER_DELETE = 500;
 
 let timer;
 
-export default React.createClass({
+export default class TodoItem extends React.Component {
 
-    displayName: 'TodoItem',
+    constructor(props) {
+        super(props);
 
-    propTypes: {
-        id: React.PropTypes.string.isRequired,
-        title: React.PropTypes.string.isRequired,
-        isCompleted: React.PropTypes.bool.isRequired,
-        isNew: React.PropTypes.bool.isRequired
-    },
-
-    mixins: [ PureRenderMixin, LinkedStateMixin ],
-
-    getInitialState: function() {
-        return {
-            isEdit: this.props.isNew,
+        this.state = {
+            isEdit: props.isNew,
             isRemoved: false,
-            editText: this.props.title
+            editText: props.title
         };
-    },
 
-    componentDidUpdate: function() {
+        this._handleCompleteToggle = this._handleCompleteToggle.bind(this);
+        this._handleTitleChange = this._handleTitleChange.bind(this);
+        this._handleDeleteClick = this._handleDeleteClick.bind(this);
+        this._handleContentClick = this._handleContentClick.bind(this);
+        this._handleKeyDown = this._handleKeyDown.bind(this);
+        this._handleBlur = this._handleBlur.bind(this);
+        this._handleUndoDeleteClick = this._handleUndoDeleteClick.bind(this);
+        this._startDeleteFromList = this._startDeleteFromList.bind(this);
+
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
+    componentDidUpdate() {
         if (this.state.isEdit) {
             let valueLength = this._editField.value.length;
             this._editField.setSelectionRange(valueLength, valueLength);
         }
-    },
+    }
 
-    _handleCompleteToggle: function() {
+    _handleCompleteToggle() {
         TodoActions.updateItem(this.props.id, {
             isCompleted: !this.props.isCompleted
         });
-    },
+    }
 
-    _handleDeleteClick: function() {
+    _handleTitleChange(event) {
+        this.setState({
+            editText: event.target.value
+        });
+    }
+
+    _handleDeleteClick() {
         TodoActions.deleteItem(this.props.id);
 
         this.setState({
             isRemoved: true
         });
-    },
+    }
 
-    _handleContentClick: function() {
+    _handleContentClick() {
         this.setState({
             isEdit: true
         });
-    },
+    }
 
-    _handleKeyDown: function(event) {
+    _handleKeyDown(event) {
         if (event.which === ESCAPE_KEY) {
             this.setState({
                 isEdit: false,
@@ -67,13 +74,13 @@ export default React.createClass({
         } else if (event.which === ENTER_KEY) {
             this._save();
         }
-    },
+    }
 
-    _handleBlur: function() {
+    _handleBlur() {
         this._save();
-    },
+    }
 
-    _handleUndoDeleteClick: function() {
+    _handleUndoDeleteClick() {
         this._stopDeleteFromList();
 
         TodoActions.undoDeleteItem(this.props.id);
@@ -81,21 +88,21 @@ export default React.createClass({
         this.setState({
             isRemoved: false
         });
-    },
+    }
 
-    _startDeleteFromList: function() {
+    _startDeleteFromList() {
         if (this.state.isRemoved) {
             timer = setTimeout(() => {
                 TodoActions.deleteItemFromList(this.props.id);
             }, DELAY_AFTER_DELETE);
         }
-    },
+    }
 
-    _stopDeleteFromList: function() {
+    _stopDeleteFromList() {
         clearTimeout(timer);
-    },
+    }
 
-    _save: function() {
+    _save() {
         let newTitle = this.state.editText.trim();
 
         TodoActions.updateItem(this.props.id, {
@@ -107,15 +114,16 @@ export default React.createClass({
             isEdit: false,
             editText: newTitle
         });
-    },
+    }
 
-    _renderContent: function() {
+    _renderContent() {
         if (this.state.isEdit) {
             return (
                 <input
                     ref={(c) => this._editField = c}
                     className={styles.editField}
-                    valueLink={this.linkState('editText')}
+                    value={this.state.editText}
+                    onChange={this._handleTitleChange}
                     onKeyDown={this._handleKeyDown}
                     onBlur={this._handleBlur}
                     maxLength={80}
@@ -129,9 +137,9 @@ export default React.createClass({
                 </span>
             );
         }
-    },
+    }
 
-    render: function() {
+    render() {
         return (
             <div className={styles.wrap}>
 
@@ -148,6 +156,7 @@ export default React.createClass({
                         checked={this.props.isCompleted}
                         onChange={this._handleCompleteToggle}
                         />
+
                     <div className={styles.content} onClick={this._handleContentClick}>
                         {this._renderContent()}
                     </div>
@@ -170,5 +179,14 @@ export default React.createClass({
             </div>
         );
     }
+}
 
-});
+TodoItem.displayName = 'TodoItem';
+TodoItem.propTypes = {
+    id: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    isCompleted: React.PropTypes.bool.isRequired,
+    isNew: React.PropTypes.bool.isRequired
+};
+
+export default TodoItem;
