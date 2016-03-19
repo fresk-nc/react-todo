@@ -1,3 +1,4 @@
+/*
 import TodoItem from 'components/TodoItem';
 import TodoActions from 'actions/TodoActions';
 import TestUtils from 'react-addons-test-utils';
@@ -204,3 +205,4 @@ describe('Component TodoItem', () => {
     });
 
 });
+*/

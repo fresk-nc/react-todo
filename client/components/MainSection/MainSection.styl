@@ -1,0 +1,67 @@
+@require '../../styles/variables.styl'
+
+.wrap
+  display: flex
+  position: relative
+  min-height: 'calc(100vh - %s - %s)' % ($header-mobile-height $footer-height)
+
+  @media screen and (min-width: $grid-desktop-breakpoint)
+    min-height: 'calc(100vh - %s - %s)' % ($header-desktop-height $footer-height)
+
+.listWrap
+  display: flex
+  position: relative
+
+  box-sizing: border-box
+  width: 98%
+  overflow: hidden;
+  max-width: 1280px
+  margin: -45px auto 0
+  border-radius: 2px
+
+  background: #FFF
+  box-shadow: 0 2px 5px 0 rgba(#000, 0.26)
+
+  transition: width 0.2s, margin 0.2s
+
+  @media screen and (min-width: $grid-desktop-breakpoint)
+    width: 70%
+    margin-top: -95px
+
+.spinner
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  display: flex
+  justify-content: center
+  align-items: center
+
+.createButton
+  position: fixed
+  right: 30px
+  bottom: 30px
+  z-index: 10
+
+  animation: appearance 0.1s linear
+  transition: all 0.2s
+
+.loadError
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+@keyframes appearance
+  0%
+    transform: scale(0)
+
+  100%
+    transform: scale(1)

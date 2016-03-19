@@ -1,37 +1,16 @@
-import TodoStore from 'stores/TodoStore';
-import TodoActions from 'actions/TodoActions';
 import TodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import styles from './TodoList.styl';
 
 class TodoList extends React.Component {
 
-    constructor() {
-        super();
-        this.state = this._getTodoState();
-        this._onChange = this._onChange.bind(this);
-    }
-
-    componentDidMount() {
-        TodoActions.readItems();
-        TodoStore.addChangeListener(this._onChange);
-    }
-
-    componentWillUnmount() {
-        TodoStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() {
-        this.setState(this._getTodoState());
-    }
-
-    _getTodoState() {
-        return {
-            items: TodoStore.getItems()
-        };
+    constructor(props) {
+        super(props);
     }
 
     render() {
+        const { todos, actions } = this.props;
+
         return (
             <ReactCSSTransitionGroup
                 className={styles.wrap}
@@ -39,15 +18,13 @@ class TodoList extends React.Component {
                 transitionName="todo-list"
                 transitionEnterTimeout={300}
                 transitionLeaveTimeout={300}>
-                {this.state.items.valueSeq().map((item) => {
+                {todos.map((todo) => {
                     return (
                         <TodoItem
-                            key={item.get('id')}
-                            id={item.get('id')}
-                            title={item.get('title')}
-                            isCompleted={item.get('isCompleted')}
-                            isNew={item.get('isNew')}
-                            />
+                            key={todo.get('id')}
+                            todo={todo.toObject()}
+                            {...actions}
+                        />
                     );
                 })}
             </ReactCSSTransitionGroup>
@@ -57,5 +34,10 @@ class TodoList extends React.Component {
 }
 
 TodoList.displayName = 'TodoList';
+
+TodoList.propTypes = {
+    actions: React.PropTypes.object.isRequired,
+    todos: React.PropTypes.object.isRequired
+};
 
 export default TodoList;

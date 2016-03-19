@@ -1,9 +1,10 @@
+@require '../../styles/variables.styl'
+
 .wrap
   position: relative
   overflow: hidden
   height: 62px
-  background: #DDD
-  border-bottom: 1px solid #B6B6B6
+  border-bottom: 1px solid $divider-color
 
 .common
   position: absolute
@@ -24,38 +25,27 @@
   &:hover .delete
     opacity: 1
 
-.removed
-  composes: common
-  left: -100%
-
 .completed
   composes: common
 
-  & .title
+  & .text
     text-decoration: line-through
-    color: #727272
-
-.editable
-  composes: common
-
-  .content
-    margin: 0 47px
-
-  .toggler
-    display: none
-
-  .delete
-    display: none
+    color: $text-color-secondary
 
 .content
   display: flex
   align-self: stretch
   flex-grow: 1
   margin: 0 28px
+  overflow: hidden
   cursor: pointer
 
-.title
+.text
   align-self: center
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+  max-width: 100%
   transition: color 0.3s
 
 .toggler
@@ -83,9 +73,6 @@
     transform: rotate(-45deg)
 
 .delete
-  font-size: 36px
-  line-height: 20px
-
   cursor: pointer
   color: #ccc
 
@@ -95,18 +82,13 @@
   &:hover
     color: #6D6D6D
 
-.editField
+.editWrap
   flex-grow: 1
+  box-sizing: border-box
+  height: 100%
+  padding: 21px 71px
+
+.editField
+  width: 100%
   border: none
   outline: none
-
-.undoWrapper
-  display: flex
-  justify-content: space-between
-  align-items: center
-  height: 100%
-  padding: 0 24px
-
-.undo
-  cursor: pointer
-  font-weight: bold

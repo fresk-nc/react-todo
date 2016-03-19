@@ -21,23 +21,8 @@
     "no-multi-spaces": 2,
     "no-multiple-empty-lines": [2, {"max": 2}],
     "new-parens": 2,
-    "new-cap": [
-      2,
-      {
-        "newIsCap": true,
-        "capIsNew": true,
-        "capIsNewExceptions": [
-          "Immutable.List",
-          "Immutable.Map",
-          "Immutable.OrderedMap",
-          "Immutable.Record",
-          "Immutable.Set"
-        ]
-      }
-    ],
 
     "react/display-name": 2,
-    "react/forbid-prop-types": [2, {"forbid": ["object", "array", "any"]}],
     "react/prop-types": 2,
     "react/jsx-uses-vars": 2,
     "react/jsx-key": 2,

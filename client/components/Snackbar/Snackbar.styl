@@ -1,0 +1,32 @@
+@require '../../styles/variables.styl'
+
+.common
+  position: fixed
+  bottom: -100px
+  left: 0
+
+  box-sizing: border-box
+  width: 100%
+  padding: 16px 24px
+  border-radius: 2px
+
+  font-size: 14px
+
+  background: #323232
+  color: #FFF
+  opacity: 0
+
+  transition: all 0.2s
+
+  @media screen and (min-width: $grid-desktop-breakpoint)
+    left: 50%
+    transform: translateX(-50%)
+    min-width: 288px
+    max-width: 568px
+    width: auto
+
+.active
+  composes: common
+
+  bottom: 0
+  opacity: 1

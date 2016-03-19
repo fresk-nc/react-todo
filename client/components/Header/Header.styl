@@ -1,0 +1,14 @@
+@require '../../styles/variables.styl'
+
+.wrap
+  position: relative
+  box-sizing: border-box
+  height: $header-mobile-height
+  background: $color-primary
+  border-top: 15px solid $color-primary-dark
+  box-shadow: 0 2px 6px rgba(#000, 0.2)
+
+  transition: height 0.2s
+
+  @media screen and (min-width: $grid-desktop-breakpoint)
+    height: $header-desktop-height

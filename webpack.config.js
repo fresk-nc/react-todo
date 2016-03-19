@@ -15,12 +15,13 @@ var config = {
     entry: {
         vendor: [
             'classnames',
-            'events',
             'react',
             'react-dom',
             'react-addons-css-transition-group',
             'react-addons-pure-render-mixin',
-            'flux/dist/Flux.js',
+            'react-redux',
+            'redux',
+            'redux-optimist',
             'immutable/dist/immutable.js',
             'keymirror'
         ],
@@ -36,9 +37,9 @@ var config = {
             actions: path.join(clientPath, 'actions'),
             components: path.join(clientPath, 'components'),
             constants: path.join(clientPath, 'constants'),
-            services: path.join(clientPath, 'services'),
-            stores: path.join(clientPath, 'stores'),
-            dispatcher: path.join(clientPath, 'dispatcher')
+            containers: path.join(clientPath, 'containers'),
+            middleware: path.join(clientPath, 'middleware'),
+            reducers: path.join(clientPath, 'reducers')
         }
     },
     resolveLoader: {
@@ -77,7 +78,6 @@ var config = {
     ],
     module: {
         noParse: [
-            /node_modules[\/\\]flux[\/\\]dist[\/\\]Flux.js/,
             /node_modules[\/\\]immutable[\/\\]dist[\/\\]immutable.js/
         ],
         loaders: [
