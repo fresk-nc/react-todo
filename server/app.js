@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -14,11 +15,16 @@ const app = express();
 morgan.token('body', (req) => JSON.stringify(req.body));
 
 app.set('port', process.env.PORT || config.port);
+app.set('dev', process.env.NODE_ENV === 'development');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(currentUser);
 app.use(morgan(':method :url :status :response-time ms :body'));
+
+if (!app.get('dev')) {
+    app.use(express.static(path.resolve(__dirname, '../static')));
+}
 
 app.use(routes);
 

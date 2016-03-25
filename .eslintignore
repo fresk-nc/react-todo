@@ -2,7 +2,9 @@
 .idea/
 node_modules/
 static/
-webpack.config.js
+webpack.config.base.js
+webpack.config.prod.js
+webpack.config.dev.js
 karma.conf.js
 package.json
 **/.*

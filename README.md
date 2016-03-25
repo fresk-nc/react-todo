@@ -2,7 +2,7 @@
 
 Project is designed to try React and Redux in action.
 
-![React-Todo](./readme/React-Todo.jpg)
+
 
 ## Technologies
 

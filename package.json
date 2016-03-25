@@ -1,12 +1,25 @@
 {
   "name": "react-todo",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "scripts": {
+    "clean": "rm -rf static",
+    "watch": "./node_modules/.bin/webpack-dev-server --inline --hot --config webpack.config.dev.js",
+    "start": "NODE_ENV=production node ./server/app.js",
+    "start:dev": "NODE_ENV=development nodemon ./server/app.js",
+    "build:dev": "npm run clean && OUTPUT=./static ./node_modules/.bin/webpack --progress --config webpack.config.dev.js",
+    "build:prod": "npm run clean && OUTPUT=./static ./node_modules/.bin/webpack --progress --config webpack.config.prod.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-only-change": "./node_modules/.bin/eslint",
+    "test": "./node_modules/karma/bin/karma start",
+    "precommit": "./scripts/pre-commit.sh",
+    "prepush": "npm run test"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com.ru:fresk-nc/react-todo.git"
-  },
-  "engines": {
-    "node": ">=4.0.0"
   },
   "dependencies": {
     "body-parser": "1.14.2",
@@ -57,13 +70,5 @@
     "stylus-loader": "1.4.3",
     "webpack": "1.12.9",
     "webpack-dev-server": "1.14.1"
-  },
-  "scripts": {
-    "watch": "./node_modules/.bin/webpack-dev-server --inline --hot",
-    "start": "nodemon ./server/app.js",
-    "build": "OUTPUT=./static ./node_modules/.bin/webpack --progress",
-    "lint": "./node_modules/.bin/eslint --no-color",
-    "test": "./node_modules/karma/bin/karma start",
-    "precommit": "./githooks/pre-commit.sh"
   }
 }
