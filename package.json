@@ -15,8 +15,7 @@
     "lint-only-change": "./node_modules/.bin/eslint",
     "test": "./node_modules/karma/bin/karma start",
     "precommit": "./scripts/pre-commit.sh",
-    "prepush": "npm run test",
-    "postinstall": "npm run build:prod && npm start"
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
