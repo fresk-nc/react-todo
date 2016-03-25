@@ -2,6 +2,7 @@
 
 Project is designed to try React and Redux in action.
 
+[http://fresk-react-todo.herokuapp.com/](http://fresk-react-todo.herokuapp.com/)
 
 
 ## Technologies
