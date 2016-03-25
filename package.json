@@ -1,6 +1,6 @@
 {
   "name": "react-todo",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "node": ">=4.0.0"
   },
