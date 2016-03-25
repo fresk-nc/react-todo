@@ -33,7 +33,12 @@ config.output = {
 config.module.loaders.push(
     {
         test: /\.js$/,
-        loaders: [ 'babel' ],
+        loader: 'babel',
+        query: {
+            plugins: [
+                'transform-object-assign'
+            ]
+        },
         include: [ clientPath ]
     },
     {
