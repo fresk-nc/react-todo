@@ -42,8 +42,7 @@
   "env": {
     "es6": true,
     "node": true,
-    "browser": true,
-    "mocha": true
+    "browser": true
   },
   "extends": [
     "eslint:recommended"
@@ -61,8 +60,6 @@
   "globals": {
     "React": false,
     "ReactDOM": false,
-    "NODE_ENV": false,
-    "expect": false,
-    "sinon": false
+    "NODE_ENV": false
   }
 }

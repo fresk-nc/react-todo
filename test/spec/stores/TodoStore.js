@@ -1,3 +1,4 @@
+/*
 import TodoStore from 'stores/TodoStore';
 import AppDispatcher from 'dispatcher/AppDispatcher';
 import TodoConstants from 'constants/TodoConstants';
@@ -95,3 +96,4 @@ describe('TodoStore', () => {
     });
 
 });
+*/

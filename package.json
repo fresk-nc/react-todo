@@ -33,6 +33,7 @@
     "babel-plugin-transform-object-assign": "6.5.0",
     "babel-preset-es2015": "6.5.0",
     "babel-preset-react": "6.5.0",
+    "chai-immutable": "git://github.com/astorije/chai-immutable#655d1871a004bad95d9adaed45f52ff586a64ea4",
     "css-loader": "0.23.1",
     "eslint": "2.2.0",
     "eslint-plugin-react": "4.0.0",
@@ -42,6 +43,7 @@
     "husky": "0.10.2",
     "karma": "0.13.21",
     "karma-babel-preprocessor": "6.0.1",
+    "karma-chai-immutable": "^1.0.2",
     "karma-mocha": "0.2.1",
     "karma-phantomjs-launcher": "1.0.0",
     "karma-sinon-chai": "1.1.0",
@@ -59,7 +61,7 @@
   "scripts": {
     "watch": "./node_modules/.bin/webpack-dev-server --inline --hot",
     "start": "nodemon ./server/app.js",
-    "build": "NODE_ENV=production OUTPUT=./static ./node_modules/.bin/webpack --progress",
+    "build": "OUTPUT=./static ./node_modules/.bin/webpack --progress",
     "lint": "./node_modules/.bin/eslint --no-color",
     "test": "./node_modules/karma/bin/karma start",
     "precommit": "./githooks/pre-commit.sh"

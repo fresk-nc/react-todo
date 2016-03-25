@@ -6,7 +6,7 @@ var clientPath = path.join(__dirname, 'client');
 
 module.exports = function(config) {
     config.set({
-        frameworks: ['mocha', 'sinon-chai'],
+        frameworks: ['mocha', 'sinon-chai', 'chai-immutable'],
         files: [
             'test/helpers/setup.js',
             'test/spec/**/*.js'
@@ -21,9 +21,9 @@ module.exports = function(config) {
                     actions: path.join(clientPath, 'actions'),
                     components: path.join(clientPath, 'components'),
                     constants: path.join(clientPath, 'constants'),
-                    services: path.join(clientPath, 'services'),
-                    stores: path.join(clientPath, 'stores'),
-                    dispatcher: path.join(clientPath, 'dispatcher')
+                    containers: path.join(clientPath, 'containers'),
+                    middleware: path.join(clientPath, 'middleware'),
+                    reducers: path.join(clientPath, 'reducers')
                 }
             },
             plugins: [
@@ -38,8 +38,7 @@ module.exports = function(config) {
             ],
             module: {
                 noParse: [
-                    /node_modules[\/\\]immutable[\/\\]dist[\/\\]immutable.js/,
-                    /node_modules[\/\\]flux[\/\\]dist[\/\\]Flux.js/
+                    /node_modules[\/\\]immutable[\/\\]dist[\/\\]immutable.js/
                 ],
                 loaders: [
                     {
