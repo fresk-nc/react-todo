@@ -38,7 +38,7 @@ app.use((err, req, res) => {
     res.send({ error: 'Server error' });
 });
 
-app.listen(app.get('port'), 'localhost', (err) => {
+app.listen(app.get('port'), (err) => {
     if (err) {
         console.log(err); // eslint-disable-line
         return;
