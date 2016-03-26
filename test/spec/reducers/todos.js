@@ -14,7 +14,7 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 100,
-                        text: 'by milk',
+                        text: 'buy milk',
                         completed: false
                     }
                 ]),
@@ -26,7 +26,7 @@ describe('todos reducer', () => {
             fromJS([
                 {
                     id: 100,
-                    text: 'by milk',
+                    text: 'buy milk',
                     completed: false
                 }
             ])
@@ -42,7 +42,7 @@ describe('todos reducer', () => {
                     response: [
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]
@@ -51,7 +51,7 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     }
                 ])
@@ -86,7 +86,7 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]),
@@ -99,7 +99,7 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
@@ -130,14 +130,14 @@ describe('todos reducer', () => {
                     {
                         type: types.CREATE_TODO,
                         id: 100,
-                        text: 'by milk'
+                        text: 'buy milk'
                     }
                 )
             ).to.be.equal(
                 fromJS([
                     {
                         id: 100,
-                        text: 'by milk',
+                        text: 'buy milk',
                         completed: false,
                         new: false
                     }
@@ -151,21 +151,21 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]),
                     {
                         type: types.CREATE_TODO,
                         id: 100,
-                        text: 'by milk'
+                        text: 'buy milk'
                     }
                 )
             ).to.be.equal(
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     }
                 ])
@@ -182,31 +182,31 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         },
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]),
                     {
                         type: types.EDIT_TODO,
                         id: 100,
-                        text: 'by potato'
+                        text: 'buy potato'
                     }
                 )
             ).to.be.equal(
                 fromJS([
                     {
                         id: 100,
-                        text: 'by potato',
+                        text: 'buy potato',
                         completed: false
                     },
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     }
                 ])
@@ -219,31 +219,31 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         }
                     ]),
                     {
                         type: types.EDIT_TODO,
                         id: 100,
-                        text: 'by potato'
+                        text: 'buy potato'
                     }
                 )
             ).to.be.equal(
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 100,
-                        text: 'by potato',
+                        text: 'buy potato',
                         completed: false
                     }
                 ])
@@ -256,31 +256,31 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         }
                     ]),
                     {
                         type: types.EDIT_TODO,
                         id: 500,
-                        text: 'by potato'
+                        text: 'buy potato'
                     }
                 )
             ).to.be.equal(
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 100,
-                        text: 'by milk',
+                        text: 'buy milk',
                         completed: false
                     }
                 ])
@@ -297,17 +297,17 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         },
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 101,
-                            text: 'by eggs',
+                            text: 'buy eggs',
                             completed: true
                         }
                     ]),
@@ -320,12 +320,12 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 101,
-                        text: 'by eggs',
+                        text: 'buy eggs',
                         completed: true
                     }
                 ])
@@ -338,17 +338,17 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         },
                         {
                             id: 101,
-                            text: 'by eggs',
+                            text: 'buy eggs',
                             completed: true
                         }
                     ]),
@@ -361,12 +361,12 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 101,
-                        text: 'by eggs',
+                        text: 'buy eggs',
                         completed: true
                     }
                 ])
@@ -379,17 +379,17 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 101,
-                            text: 'by eggs',
+                            text: 'buy eggs',
                             completed: true
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         }
                     ]),
@@ -402,12 +402,12 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 101,
-                        text: 'by eggs',
+                        text: 'buy eggs',
                         completed: true
                     }
                 ])
@@ -420,7 +420,7 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]),
@@ -433,7 +433,7 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     }
                 ])
@@ -450,17 +450,17 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 101,
-                            text: 'by eggs',
+                            text: 'buy eggs',
                             completed: true
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         }
                     ]),
@@ -473,17 +473,17 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 101,
-                        text: 'by eggs',
+                        text: 'buy eggs',
                         completed: true
                     },
                     {
                         id: 100,
-                        text: 'by milk',
+                        text: 'buy milk',
                         completed: true
                     }
                 ])
@@ -496,17 +496,17 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         },
                         {
                             id: 101,
-                            text: 'by eggs',
+                            text: 'buy eggs',
                             completed: true
                         },
                         {
                             id: 100,
-                            text: 'by milk',
+                            text: 'buy milk',
                             completed: false
                         }
                     ]),
@@ -519,17 +519,17 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     },
                     {
                         id: 101,
-                        text: 'by eggs',
+                        text: 'buy eggs',
                         completed: false
                     },
                     {
                         id: 100,
-                        text: 'by milk',
+                        text: 'buy milk',
                         completed: false
                     }
                 ])
@@ -542,7 +542,7 @@ describe('todos reducer', () => {
                     fromJS([
                         {
                             id: 99,
-                            text: 'by bread',
+                            text: 'buy bread',
                             completed: false
                         }
                     ]),
@@ -555,7 +555,7 @@ describe('todos reducer', () => {
                 fromJS([
                     {
                         id: 99,
-                        text: 'by bread',
+                        text: 'buy bread',
                         completed: false
                     }
                 ])
