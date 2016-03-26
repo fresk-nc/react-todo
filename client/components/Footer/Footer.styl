@@ -2,12 +2,21 @@
 
 .wrap
   display: flex
-  height: $footer-height
+  height: $footer-mobile-height
+
+  transition: height 0.2s
+
+  @media screen and (min-width: $grid-tablet-breakpoint)
+    height: $footer-tablet-height
 
 .text
-  margin: auto
   font-size: 14px
+  flex-grow: 1
+  margin: auto 1%
   color: $text-color-secondary
+
+  @media screen and (min-width: $grid-tablet-breakpoint)
+    text-align: center
 
 .link
   color: $color-primary

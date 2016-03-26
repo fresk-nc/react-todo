@@ -3,10 +3,13 @@
 .wrap
   display: flex
   position: relative
-  min-height: 'calc(100vh - %s - %s)' % ($header-mobile-height $footer-height)
+  min-height: 'calc(100vh - %s - %s)' % ($header-mobile-height $footer-mobile-height)
+
+  @media screen and (min-width: $grid-tablet-breakpoint)
+    min-height: 'calc(100vh - %s - %s)' % ($header-tablet-height $footer-tablet-height)
 
   @media screen and (min-width: $grid-desktop-breakpoint)
-    min-height: 'calc(100vh - %s - %s)' % ($header-desktop-height $footer-height)
+    min-height: 'calc(100vh - %s - %s)' % ($header-desktop-height $footer-desktop-height)
 
 .listWrap
   display: flex
@@ -40,12 +43,16 @@
 
 .createButton
   position: fixed
-  right: 30px
-  bottom: 30px
+  right: 12px
+  bottom: 12px
   z-index: 10
 
   animation: appearance 0.1s linear
   transition: all 0.2s
+
+  @media screen and (min-width: $grid-tablet-breakpoint)
+    right: 30px
+    bottom: 30px
 
 .loadError
   position: absolute
