@@ -104,14 +104,14 @@ export default class TodoItem extends React.Component {
         });
 
         return (
-            <div className={className} onDoubleClick={this._handleDoubleClick.bind(this)}>
+            <div className={className}>
                 <input
                     className={styles.toggler}
                     type="checkbox"
                     checked={todo.completed}
                     onChange={() => completeTodo(todo.id, todo.completed)}
                 />
-                <div className={styles.content}>
+                <div className={styles.content} onDoubleClick={this._handleDoubleClick.bind(this)}>
                     <span className={styles.text} title={todo.text}>
                         {todo.text}
                     </span>
