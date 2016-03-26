@@ -1,3 +1,7 @@
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as TodoActions from 'actions';
+
 import Header from 'components/Header';
 import MainSection from 'components/MainSection';
 import Footer from 'components/Footer';
@@ -9,6 +13,10 @@ class App extends React.Component {
         super(props);
         this._handleTimeoutSnackbar = this._handleTimeoutSnackbar.bind(this);
         this.state = { isSnackbarActive: false };
+    }
+
+    componentDidMount() {
+        this.props.actions.getTodos();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -49,10 +57,27 @@ class App extends React.Component {
 App.displayName = 'App';
 
 App.propTypes = {
-    todos: React.PropTypes.object,
-    actions: React.PropTypes.object,
-    status: React.PropTypes.object,
-    notifications: React.PropTypes.object
+    actions: React.PropTypes.object.isRequired,
+    todos: React.PropTypes.object.isRequired,
+    status: React.PropTypes.object.isRequired,
+    notifications: React.PropTypes.object.isRequired
 };
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        todos: state.todos,
+        status: state.status,
+        notifications: state.notifications
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(TodoActions, dispatch)
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
