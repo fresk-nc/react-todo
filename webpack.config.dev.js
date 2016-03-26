@@ -4,18 +4,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const clientPath = path.join(__dirname, 'client');
 const staticPath = path.join(__dirname, 'static');
+const serverConfig = require('./server/config.js');
 const baseConfig = require('./webpack.config.base.js');
 const config = Object.create(baseConfig);
 
 config.devtool = 'eval';
 
-config.entry = {
-    index: './index.js'
-};
+config.entry = [
+    `webpack-hot-middleware/client?path=http://localhost:${serverConfig.port}/__webpack_hmr`,
+    './index.js'
+];
 
 config.output = {
-    filename: '[name].js',
-    path: staticPath
+    filename: 'bundle.js',
+    path: staticPath,
+    publicPath: '/'
 };
 
 config.module.loaders.push(
@@ -31,6 +34,7 @@ config.module.loaders.push(
 );
 
 config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
         inject: 'body',
         template: path.join(clientPath, 'index.html')
@@ -43,15 +47,5 @@ config.plugins.push(
         }
     })
 );
-
-config.devServer = {
-    proxy: {
-        '*': 'http://localhost:8000'
-    },
-    watchOptions: {
-        aggregateTimeout: 300,
-            poll: true
-    }
-};
 
 module.exports = config;

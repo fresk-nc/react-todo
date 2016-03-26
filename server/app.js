@@ -22,7 +22,9 @@ app.use(cookieParser());
 app.use(currentUser);
 app.use(morgan(':method :url :status :response-time ms :body'));
 
-if (!app.get('dev')) {
+if (app.get('dev')) {
+    require('./middleware/webpackInit.js')(app);
+} else {
     app.use(express.static(path.resolve(__dirname, '../static')));
 }
 
