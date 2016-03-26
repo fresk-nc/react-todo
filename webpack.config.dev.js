@@ -26,7 +26,7 @@ config.module.loaders.push(
     },
     {
         test: /\.styl$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!stylus'
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!stylus'
     }
 );
 

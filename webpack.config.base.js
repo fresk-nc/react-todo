@@ -1,4 +1,5 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 
 const clientPath = path.join(__dirname, 'client');
@@ -36,5 +37,12 @@ module.exports = {
             React: 'react',
             ReactDOM: 'react-dom'
         })
-    ]
+    ],
+    postcss: function() {
+        return [
+            autoprefixer({
+                browsers: [ 'last 2 versions' ]
+            })
+        ];
+    }
 };

@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 
 const clientPath = path.join(__dirname, 'client');
 const staticPath = path.join(__dirname, 'static');
@@ -46,14 +45,6 @@ config.module.loaders.push(
         loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!stylus')
     }
 );
-
-config.postcss = function() {
-    return [
-        autoprefixer({
-            browsers: [ 'last 2 versions' ]
-        })
-    ];
-};
 
 config.plugins.push(
     new webpack.optimize.OccurenceOrderPlugin(),
