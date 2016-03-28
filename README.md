@@ -4,6 +4,8 @@ Project is designed to try React and Redux in action.
 
 [http://fresk-react-todo.herokuapp.com/](http://fresk-react-todo.herokuapp.com/)
 
+![demonstration](demonstration.gif)
+
 ## Run
 
 Install the MongoDB, if you have not done it.
