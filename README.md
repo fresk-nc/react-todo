@@ -7,12 +7,11 @@ Project is designed to try React and Redux in action.
 ## Run
 
 Install the MongoDB, if you have not done it.
-Run this three commands in different console tabs.
+Run this two commands in different console tabs.
 
 ```
-$ mongod
 $ npm run watch
-$ npm run start:dev
+$ npm run daemon
 ```
 
 ## Technologies
