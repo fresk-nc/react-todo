@@ -18,8 +18,11 @@ export default class TodoItem extends React.Component {
 
     componentDidUpdate() {
         if (this.state.editing || this.props.todo.new) {
-            let valueLength = this._editField.value.length;
-            this._editField.setSelectionRange(valueLength, valueLength);
+
+            if (this._editField.selectionStart === 0) {
+                this._editField.selectionStart = this._editField.value.length;
+            }
+
             this._editField.focus();
         }
     }
