@@ -31,7 +31,7 @@ export default class TodoItem extends React.Component {
         this.setState({ editText: event.target.value });
     }
 
-    _handleDoubleClick() {
+    _handleTextClick() {
         this.setState({ editing: true });
     }
 
@@ -114,7 +114,7 @@ export default class TodoItem extends React.Component {
                     checked={todo.completed}
                     onChange={() => completeTodo(todo.id, todo.completed)}
                 />
-                <div className={styles.content} onDoubleClick={this._handleDoubleClick.bind(this)}>
+                <div className={styles.content} onClick={this._handleTextClick.bind(this)}>
                     <span className={styles.text} title={todo.text}>
                         {todo.text}
                     </span>
