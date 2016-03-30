@@ -6,7 +6,7 @@ var clientPath = path.join(__dirname, 'client');
 
 module.exports = function(config) {
     config.set({
-        frameworks: ['mocha', 'sinon-chai', 'chai-immutable'],
+        frameworks: ['mocha', 'chai-immutable', 'sinon-chai'],
         files: [
             'test/helpers/setup.js',
             'test/spec/**/*.js'
@@ -16,7 +16,7 @@ module.exports = function(config) {
         },
         webpack: {
             resolve: {
-                extensions: ['', '.js', '.styl'],
+                extensions: ['', '.js', '.json', '.styl'],
                 alias: {
                     actions: path.join(clientPath, 'actions'),
                     components: path.join(clientPath, 'components'),
@@ -54,8 +54,16 @@ module.exports = function(config) {
                     {
                         test: /\.styl$/,
                         loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!stylus'
+                    },
+                    {
+                        test: /\.json$/,
+                        loader: 'json'
                     }
                 ]
+            },
+            externals: {
+                'react/lib/ExecutionEnvironment': true,
+                'react/lib/ReactContext': true
             }
         },
         webpackMiddleware: {
