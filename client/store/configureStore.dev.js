@@ -3,13 +3,27 @@ import api from 'middleware/api';
 import createLogger from 'redux-logger';
 import rootReducer from 'reducers';
 import DevTools from 'containers/DevTools';
+import { Iterable } from 'immutable';
+
+function stateTransformer(state) {
+    return Object.keys(state).reduce((newState, key) => {
+        const value = state[key];
+
+        newState[key] = Iterable.isIterable(value) ? value.toJS() : value;
+
+        return newState;
+    }, {});
+}
 
 export default function configureStore(initialState) {
     const store = createStore(
         rootReducer,
         initialState,
         compose(
-            applyMiddleware(api, createLogger()),
+            applyMiddleware(
+                api,
+                createLogger({ stateTransformer })
+            ),
             DevTools.instrument()
         )
     );
