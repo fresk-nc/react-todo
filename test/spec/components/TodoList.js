@@ -4,22 +4,21 @@ import { fromJS } from 'immutable';
 import { shallow } from 'enzyme';
 
 function setup(props) {
+    const actions = {
+        createTodo: sinon.spy(),
+        completeTodo: sinon.spy(),
+        deleteLocalTodo: sinon.spy(),
+        deleteTodo: sinon.spy(),
+        editTodo: sinon.spy()
+    };
+
     const component = shallow(
-        <TodoList todos={props.todos} actions={props.actions} />
+        <TodoList todos={props.todos} actions={actions} />
     );
 
     return {
+        actions,
         component
-    };
-}
-
-function mockActions() {
-    return {
-        completeTodo: () => {},
-        createTodo: () => {},
-        deleteLocalTodo: () => {},
-        deleteTodo: () => {},
-        editTodo: () => {}
     };
 }
 
@@ -38,10 +37,7 @@ describe('TodoList component', () => {
                 completed: true
             }
         ]);
-        const { component } = setup({
-            todos,
-            actions: mockActions()
-        });
+        const { component } = setup({ todos });
 
         expect(component.find(TodoItem)).to.have.length(todos.size);
     });
