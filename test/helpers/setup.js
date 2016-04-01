@@ -1,24 +1,20 @@
-(function () {
+beforeEach(function() {
+    this.sinon = sinon.sandbox.create();
+});
 
-    beforeEach(function () {
-        this.sinon = sinon.sandbox.create();
-    });
+afterEach(function() {
+    this.sinon.restore();
+    clearTestContext(this);
+});
 
-    afterEach(function () {
-        this.sinon.restore();
-        clearTestContext(this);
-    });
-
-    function clearTestContext(context) {
-        if (!context || typeof context !== 'object') {
-            return;
-        }
-
-        for (let property in context) {
-            if (context.hasOwnProperty(property)) {
-                delete context[property];
-            }
-        }
+function clearTestContext(context) {
+    if (!context || typeof context !== 'object') {
+        return;
     }
 
-}());
+    for (let property in context) {
+        if (context.hasOwnProperty(property)) {
+            delete context[property];
+        }
+    }
+}
