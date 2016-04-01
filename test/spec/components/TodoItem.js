@@ -1,208 +1,198 @@
-/*
 import TodoItem from 'components/TodoItem';
-import TodoActions from 'actions/TodoActions';
-import TestUtils from 'react-addons-test-utils';
 import styles from 'components/TodoItem/TodoItem.styl';
+import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
+import { shallow } from 'enzyme';
 
-const ESCAPE_KEY = 27;
-const ENTER_KEY = 13;
+function setup(props) {
+    const actions = {
+        createTodo: sinon.spy(),
+        completeTodo: sinon.spy(),
+        deleteLocalTodo: sinon.spy(),
+        deleteTodo: sinon.spy(),
+        editTodo: sinon.spy()
+    };
 
-function renderComponent(props) {
-    return TestUtils.renderIntoDocument(<TodoItem {...props} />);
+    const component = shallow(
+        <TodoItem todo={props.todo} {...actions} />
+    );
+
+    return {
+        actions,
+        component,
+        content: component.find(`.${styles.content}`),
+        text: component.find(`.${styles.text}`),
+        toggler: component.find(`.${styles.toggler}`),
+        deleteButton: component.find(`.${styles.delete}`),
+        editField: component.find(`.${styles.editField}`)
+    };
 }
 
-describe('Component TodoItem', () => {
+function mockTodo(overrides) {
+    return Object.assign({}, {
+        id: 1,
+        text: 'buy milk',
+        completed: false
+    }, overrides);
+}
+
+describe('TodoItem component', () => {
 
     beforeEach(function() {
-        this.mockProps = {
-            id: '1',
-            title: 'test',
-            isCompleted: false,
-            isNew: false
-        };
-
-        this.sinon.stub(TodoActions, 'updateItem');
-        this.sinon.stub(TodoActions, 'deleteItem');
-        this.sinon.stub(TodoActions, 'undoDeleteItem');
+        this.sinon.stub(TodoItem.prototype, 'componentDidUpdate');
     });
 
-    it('should exists', function() {
-        const component = renderComponent(this.mockProps);
+    it('should render the text', () => {
+        const todo = mockTodo();
+        const { text } = setup({ todo });
 
-        expect(TestUtils.isCompositeComponent(component)).to.be.equal(true);
+        expect(text.text()).to.be.equal(todo.text);
     });
 
-    it('should render the toggler', function() {
-        const component = renderComponent(this.mockProps);
-        const toggler = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.toggler);
+    it('should render the unchecked toggler when not completed', () => {
+        const todo = mockTodo();
+        const { toggler } = setup({ todo });
 
-        expect(toggler.length).to.be.equal(1);
-        expect(toggler[0].checked).to.be.equal(false);
+        expect(toggler.prop('checked')).to.be.equal(false);
     });
 
-    it('should render the checked toggler for completed todo', function() {
-        const component = renderComponent(Object.assign(this.mockProps, {
-            isCompleted: true
-        }));
-        const toggler = TestUtils.findRenderedDOMComponentWithClass(component, styles.toggler);
+    it('should render the checked toggler when completed', () => {
+        const todo = mockTodo({ completed: true });
+        const { toggler } = setup({ todo });
 
-        expect(toggler.checked).to.be.equal(true);
+        expect(toggler.prop('checked')).to.be.equal(true);
     });
 
-    it('should call action of update by clicking on the toggler', function() {
-        const component = renderComponent(this.mockProps);
-        const toggler = TestUtils.findRenderedDOMComponentWithClass(component, styles.toggler);
+    it('should call completeTodo handler with the right arguments by clicking on the toggler', () => {
+        const todo = mockTodo();
+        const { toggler, actions } = setup({ todo });
 
-        TestUtils.Simulate.change(toggler);
-
-        expect(TodoActions.updateItem).to.have.callCount(1);
-        expect(TodoActions.updateItem).to.be.calledWith(this.mockProps.id, {
-            isCompleted: true
-        });
+        toggler.simulate('change');
+        expect(actions.completeTodo).to.have.callCount(1);
+        expect(actions.completeTodo).to.be.calledWith(todo.id, todo.completed);
     });
 
-    it('should render the title, if not edit mode and todo is not new', function() {
-        const component = renderComponent(this.mockProps);
-        const title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        const editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
+    it('should render the delete button', () => {
+        const todo = mockTodo();
+        const { deleteButton } = setup({ todo });
 
-        expect(title.length).to.be.equal(1);
-        expect(editField.length).to.be.equal(0);
-        expect(title[0].textContent).to.be.equal('test');
+        expect(deleteButton).to.have.length(1);
     });
 
-    it('should render the edit field for new todo', function() {
-        const component = renderComponent(Object.assign(this.mockProps, {
-            isNew: true
-        }));
-        const title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        const editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
+    it('should call deleteTodo handler with the right arguments by clicking on the delete button', () => {
+        const todo = mockTodo();
+        const { deleteButton, actions } = setup({ todo });
 
-        expect(title.length).to.be.equal(0);
-        expect(editField.length).to.be.equal(1);
+        deleteButton.simulate('click');
+        expect(actions.deleteTodo).to.have.callCount(1);
+        expect(actions.deleteTodo).to.be.calledWith(todo.id);
     });
 
-    it('should be able to replace the title to the edit field by clicking on the content', function() {
-        const component = renderComponent(this.mockProps);
-        let title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        let editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
+    it('should hide all controls and display the input field by clicking on the content', () => {
+        const todo = mockTodo();
+        const {
+            component,
+            content,
+            text,
+            toggler,
+            deleteButton,
+            editField
+        } = setup({ todo });
 
-        expect(title.length).to.be.equal(1);
-        expect(editField.length).to.be.equal(0);
+        expect(editField).to.have.length(0);
+        expect(content).to.have.length(1);
+        expect(text).to.have.length(1);
+        expect(toggler).to.have.length(1);
+        expect(deleteButton).to.have.length(1);
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
-        title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
+        content.simulate('click');
 
-        expect(title.length).to.be.equal(0);
-        expect(editField.length).to.be.equal(1);
+        expect(component.find(`.${styles.editField}`)).to.have.length(1);
+        expect(component.find(`${styles.content}`)).to.have.length(0);
+        expect(component.find(`${styles.text}`)).to.have.length(0);
+        expect(component.find(`${styles.toggler}`)).to.have.length(0);
+        expect(component.find(`${styles.delete}`)).to.have.length(0);
     });
 
-    it('should render the edit field with todo title, after clicking on the content', function() {
-        const component = renderComponent(this.mockProps);
+    it('should render only the input field if the todo is new', () => {
+        const todo = mockTodo({ new: true });
+        const {
+            content,
+            text,
+            toggler,
+            deleteButton,
+            editField
+        } = setup({ todo });
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
-        const editField = TestUtils.findRenderedDOMComponentWithClass(component, styles.editField);
-
-        expect(editField.value).to.be.equal(this.mockProps.title);
+        expect(editField).to.have.length(1);
+        expect(content).to.have.length(0);
+        expect(text).to.have.length(0);
+        expect(toggler).to.have.length(0);
+        expect(deleteButton).to.have.length(0);
     });
 
-    it('should be able to replace the edit field to the title by pressing on the escape', function() {
-        const component = renderComponent(this.mockProps);
+    it('should call deleteLocalTodo handler with the right arguments by pressing Escape if the todo is new', () => {
+        const todo = mockTodo({ new: true });
+        const { editField, actions } = setup({ todo });
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
+        editField.simulate('keydown', { which: ESCAPE });
 
-        let title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        let editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
-
-        expect(title.length).to.be.equal(0);
-        expect(editField.length).to.be.equal(1);
-
-        TestUtils.Simulate.keyDown(editField[0], {
-            which: ESCAPE_KEY
-        });
-        title = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.title);
-        editField = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.editField);
-
-        expect(title.length).to.be.equal(1);
-        expect(editField.length).to.be.equal(0);
+        expect(actions.deleteLocalTodo).to.have.callCount(1);
+        expect(actions.deleteLocalTodo).to.be.calledWith(todo.id);
     });
 
-    it('should call action of update by pressing on the Enter', function() {
-        const component = renderComponent(this.mockProps);
+    it('should exit the edit mode by pressing Escape if the todo is not new', () => {
+        const todo = mockTodo();
+        const { component } = setup({ todo });
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
+        component.setState({ editing: true });
+        component.find(`.${styles.editField}`).simulate('keydown', { which: ESCAPE });
 
-        const editField = TestUtils.findRenderedDOMComponentWithClass(component, styles.editField);
-        const newTitle = 'new title';
-        TestUtils.Simulate.change(editField, {
-            target: {
-                value: newTitle
-            }
-        });
-        TestUtils.Simulate.keyDown(editField, {
-            which: ENTER_KEY
-        });
-
-        expect(TodoActions.updateItem).to.have.callCount(1);
-        expect(TodoActions.updateItem).to.be.calledWith(this.mockProps.id, {
-            title: newTitle,
-            isNew: false
-        });
+        expect(component.state('editing')).to.be.equal(false);
     });
 
-    it('should call action of update by blurring the edit field', function() {
-        const component = renderComponent(this.mockProps);
+    it('should call deleteLocalTodo handler with right arguments by pressing Enter if the todo is new and there is no text', () => {
+        const todo = mockTodo({ new: true, text: '' });
+        const { editField, actions } = setup({ todo });
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.content));
+        editField.simulate('keydown', { which: ENTER });
 
-        const editField = TestUtils.findRenderedDOMComponentWithClass(component, styles.editField);
-        const newTitle = 'new title';
-        TestUtils.Simulate.change(editField, {
-            target: {
-                value: newTitle
-            }
-        });
-        TestUtils.Simulate.blur(editField);
-
-        expect(TodoActions.updateItem).to.have.callCount(1);
-        expect(TodoActions.updateItem).to.be.calledWith(this.mockProps.id, {
-            title: newTitle,
-            isNew: false
-        });
+        expect(actions.deleteLocalTodo).to.have.callCount(1);
+        expect(actions.deleteLocalTodo).to.be.calledWith(todo.id);
     });
 
-    it('should render the delete button', function() {
-        const component = renderComponent(this.mockProps);
-        const deleteButton = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.delete);
+    it('should call deleteTodo handler with right arguments by pressing Enter if the todo is not new and there is no text', () => {
+        const todo = mockTodo();
+        const { component, actions } = setup({ todo });
 
-        expect(deleteButton.length).to.be.equal(1);
+        component.setState({ editing: true, editText: '' });
+        component.find(`.${styles.editField}`).simulate('keydown', { which: ENTER });
+
+        expect(actions.deleteTodo).to.have.callCount(1);
+        expect(actions.deleteTodo).to.be.calledWith(todo.id);
     });
 
-    it('should call action of delete by clicking on the delete button', function() {
-        const component = renderComponent(this.mockProps);
+    it('should call createTodo handler with right arguments by pressing Enter if the todo is new and there is text', () => {
+        const todo = mockTodo({ new: true });
+        const { component, editField, actions } = setup({ todo });
+        const newTitle = 'buy bread';
 
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.delete));
+        component.setState({ editText: newTitle });
+        editField.simulate('keydown', { which: ENTER });
 
-        expect(TodoActions.deleteItem).to.have.callCount(1);
-        expect(TodoActions.deleteItem).to.be.calledWith(this.mockProps.id);
+        expect(actions.createTodo).to.have.callCount(1);
+        expect(actions.createTodo).to.be.calledWith(todo.id, newTitle);
     });
 
-    it('should render the undo-delete button', function() {
-        const component = renderComponent(this.mockProps);
-        const undoDeleteButton = TestUtils.scryRenderedDOMComponentsWithClass(component, styles.undo);
+    it('should call editTodo handler with right arguments by pressing Enter if the todo is not new and there is text', () => {
+        const todo = mockTodo();
+        const { component, actions } = setup({ todo });
+        const newTitle = 'buy bread';
 
-        expect(undoDeleteButton.length).to.be.equal(1);
-    });
+        component.setState({ editing: true, editText: newTitle });
+        component.find(`.${styles.editField}`).simulate('keydown', { which: ENTER });
 
-    it('should call action of undo-delete by clicking on the undo button', function() {
-        const component = renderComponent(this.mockProps);
-
-        TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(component, styles.undo));
-
-        expect(TodoActions.undoDeleteItem).to.have.callCount(1);
-        expect(TodoActions.undoDeleteItem).to.be.calledWith(this.mockProps.id);
+        expect(actions.editTodo).to.have.callCount(1);
+        expect(actions.editTodo).to.be.calledWith(todo.id, newTitle);
     });
 
 });
-*/
