@@ -1,4 +1,5 @@
 #React-Todo
+[![Build Status](https://travis-ci.org/fresk-nc/react-todo.svg?branch=master)](https://travis-ci.org/fresk-nc/react-todo)
 
 Project is designed to try React and Redux in action.
 
