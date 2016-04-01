@@ -26,7 +26,6 @@ class MainSection extends React.Component {
         );
     }
 
-
     _renderSpinner() {
         const { status } = this.props;
 
