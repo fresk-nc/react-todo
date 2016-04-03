@@ -1,6 +1,7 @@
 import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
 import classNames from 'classnames';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { injectIntl } from 'react-intl';
 import styles from './TodoItem.styl';
 
 export default class TodoItem extends React.Component {
@@ -82,7 +83,7 @@ export default class TodoItem extends React.Component {
     }
 
     _renderContent() {
-        const { todo, deleteTodo, completeTodo } = this.props;
+        const { todo, deleteTodo, completeTodo, intl } = this.props;
 
         if (this.state.editing || todo.new) {
             return (
@@ -119,7 +120,10 @@ export default class TodoItem extends React.Component {
                         {todo.text}
                     </span>
                 </div>
-                <span className={styles.delete} onClick={() => deleteTodo(todo.id)} title="Remove">
+                <span
+                    className={styles.delete}
+                    onClick={() => deleteTodo(todo.id)}
+                    title={intl.formatMessage({ id: 'remove' })}>
                     <i className="material-icons">delete</i>
                 </span>
             </div>
@@ -149,7 +153,8 @@ TodoItem.propTypes = {
         text: React.PropTypes.string.isRequired,
         completed: React.PropTypes.bool.isRequired,
         new: React.PropTypes.boolean
-    })
+    }),
+    intl: React.PropTypes.object.isRequired
 };
 
-export default TodoItem;
+export default injectIntl(TodoItem);

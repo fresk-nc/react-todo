@@ -14,7 +14,8 @@ module.exports = {
             constants: path.join(clientPath, 'constants'),
             containers: path.join(clientPath, 'containers'),
             middleware: path.join(clientPath, 'middleware'),
-            reducers: path.join(clientPath, 'reducers')
+            reducers: path.join(clientPath, 'reducers'),
+            loc: path.join(clientPath, 'loc')
         }
     },
     resolveLoader: {

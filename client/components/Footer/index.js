@@ -1,3 +1,4 @@
+import { FormattedMessage } from 'react-intl';
 import styles from './Footer.styl';
 
 class Footer extends React.Component {
@@ -6,11 +7,19 @@ class Footer extends React.Component {
         return (
             <footer className={styles.wrap}>
                 <p className={styles.text}>
-                    You may view the
-                    <a className={styles.link}
-                       href="https://github.com/fresk-nc/react-todo" target="_blink"
-                    > Source Code </a>
-                    on GitHub
+                    <FormattedMessage
+                        id="sourceCode"
+                        values={{
+                            link: (
+                                <a
+                                    className={styles.link}
+                                    href="https://github.com/fresk-nc/react-todo"
+                                    target="_blink">
+                                    <FormattedMessage id="githubLink" />
+                                </a>
+                            )
+                        }}
+                    />
                 </p>
             </footer>
         );

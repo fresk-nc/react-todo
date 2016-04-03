@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TodoActions from 'actions';
+import { FormattedMessage } from 'react-intl';
 
 import Header from 'components/Header';
 import MainSection from 'components/MainSection';
@@ -36,8 +37,22 @@ class App extends React.Component {
         this.props.actions.deleteNotification();
     }
 
+    _renderSnackbarContent() {
+        const { notifications } = this.props;
+
+        if (!notifications.size) {
+            return null;
+        }
+
+        const type = notifications.first().get('type');
+
+        return (
+            <FormattedMessage id={type} />
+        );
+    }
+
     render() {
-        const { todos, actions, status, notifications } = this.props;
+        const { todos, actions, status } = this.props;
         const { isSnackbarActive } = this.state;
 
         return (
@@ -46,7 +61,7 @@ class App extends React.Component {
                 <MainSection todos={todos} actions={actions} status={status} />
                 <Footer />
                 <Snackbar active={isSnackbarActive} onTimeout={this._handleTimeoutSnackbar}>
-                    {notifications.size ? notifications.first().get('message') : null}
+                    {this._renderSnackbarContent()}
                 </Snackbar>
             </div>
         );

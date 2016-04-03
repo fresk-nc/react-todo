@@ -6,7 +6,7 @@ var clientPath = path.join(__dirname, 'client');
 
 module.exports = function(config) {
     config.set({
-        frameworks: ['mocha', 'chai-immutable', 'sinon-chai'],
+        frameworks: ['mocha', 'intl-shim', 'chai-immutable', 'sinon-chai'],
         files: [
             'test/helpers/setup.js',
             'test/spec/**/*.js'
@@ -23,7 +23,8 @@ module.exports = function(config) {
                     constants: path.join(clientPath, 'constants'),
                     containers: path.join(clientPath, 'containers'),
                     middleware: path.join(clientPath, 'middleware'),
-                    reducers: path.join(clientPath, 'reducers')
+                    reducers: path.join(clientPath, 'reducers'),
+                    loc: path.join(clientPath, 'loc')
                 }
             },
             plugins: [

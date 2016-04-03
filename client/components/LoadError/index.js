@@ -1,3 +1,4 @@
+import { FormattedMessage } from 'react-intl';
 import styles from './LoadError.styl';
 
 class LoadError extends React.Component {
@@ -8,7 +9,9 @@ class LoadError extends React.Component {
                 <div className={styles.img}>
                     <i className="material-icons">cloud_off</i>
                 </div>
-                <p className={styles.text}>Can't load todos</p>
+                <p className={styles.text}>
+                    <FormattedMessage id="loadError" />
+                </p>
             </div>
         );
     }

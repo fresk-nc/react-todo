@@ -13,7 +13,7 @@ describe('notifications reducer', () => {
             notifications(
                 fromJS([
                     {
-                        message: 'message'
+                        type: 'notification.deleteFail'
                     }
                 ]),
                 {
@@ -23,7 +23,7 @@ describe('notifications reducer', () => {
         ).to.be.equal(
             fromJS([
                 {
-                    message: 'message'
+                    type: 'notification.deleteFail'
                 }
             ])
         );
@@ -47,10 +47,10 @@ describe('notifications reducer', () => {
                 notifications(
                     fromJS([
                         {
-                            message: 'message 1'
+                            type: 'notification.deleteFail'
                         },
                         {
-                            message: 'message 2'
+                            type: 'notification.createFail'
                         }
                     ]),
                     {
@@ -60,7 +60,7 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'message 2'
+                        type: 'notification.createFail'
                     }
                 ])
             );
@@ -81,7 +81,7 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'Todo isn\'t removed'
+                        type: 'notification.deleteFail'
                     }
                 ])
             );
@@ -92,7 +92,7 @@ describe('notifications reducer', () => {
                 notifications(
                     fromJS([
                         {
-                            message: 'message'
+                            type: 'notification.createFail'
                         }
                     ]),
                     {
@@ -102,10 +102,10 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'message'
+                        type: 'notification.createFail'
                     },
                     {
-                        message: 'Todo isn\'t removed'
+                        type: 'notification.deleteFail'
                     }
                 ])
             );
@@ -126,7 +126,7 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'Todo isn\'t created'
+                        type: 'notification.createFail'
                     }
                 ])
             );
@@ -137,7 +137,7 @@ describe('notifications reducer', () => {
                 notifications(
                     fromJS([
                         {
-                            message: 'message'
+                            type: 'notification.deleteFail'
                         }
                     ]),
                     {
@@ -147,10 +147,10 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'message'
+                        type: 'notification.deleteFail'
                     },
                     {
-                        message: 'Todo isn\'t created'
+                        type: 'notification.createFail'
                     }
                 ])
             );
@@ -171,7 +171,7 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'Todo isn\'t edited'
+                        type: 'notification.editFail'
                     }
                 ])
             );
@@ -182,7 +182,7 @@ describe('notifications reducer', () => {
                 notifications(
                     fromJS([
                         {
-                            message: 'message'
+                            type: 'notification.createFail'
                         }
                     ]),
                     {
@@ -192,10 +192,10 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'message'
+                        type: 'notification.createFail'
                     },
                     {
-                        message: 'Todo isn\'t edited'
+                        type: 'notification.editFail'
                     }
                 ])
             );
@@ -216,7 +216,7 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'Todo isn\'t edited'
+                        type: 'notification.editFail'
                     }
                 ])
             );
@@ -227,7 +227,7 @@ describe('notifications reducer', () => {
                 notifications(
                     fromJS([
                         {
-                            message: 'message'
+                            type: 'notification.createFail'
                         }
                     ]),
                     {
@@ -237,10 +237,10 @@ describe('notifications reducer', () => {
             ).to.be.equal(
                 fromJS([
                     {
-                        message: 'message'
+                        type: 'notification.createFail'
                     },
                     {
-                        message: 'Todo isn\'t edited'
+                        type: 'notification.editFail'
                     }
                 ])
             );

@@ -2,6 +2,14 @@ import TodoItem from 'components/TodoItem';
 import styles from 'components/TodoItem/TodoItem.styl';
 import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
 import { shallow } from 'enzyme';
+import { IntlProvider } from 'react-intl';
+import { messages } from 'loc/en';
+
+const locale = 'en';
+const intlProvider = new IntlProvider({
+    locale,
+    messages
+}, {});
 
 function setup(props) {
     const actions = {
@@ -11,9 +19,10 @@ function setup(props) {
         deleteTodo: sinon.spy(),
         editTodo: sinon.spy()
     };
+    const { intl } = intlProvider.getChildContext();
 
     const component = shallow(
-        <TodoItem todo={props.todo} {...actions} />
+        <TodoItem.WrappedComponent todo={props.todo} {...actions} intl={intl} />
     );
 
     return {
@@ -38,7 +47,7 @@ function mockTodo(overrides) {
 describe('TodoItem component', () => {
 
     beforeEach(function() {
-        this.sinon.stub(TodoItem.prototype, 'componentDidUpdate');
+        this.sinon.stub(TodoItem.WrappedComponent.prototype, 'componentDidUpdate');
     });
 
     it('should render the text', () => {

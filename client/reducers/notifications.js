@@ -9,18 +9,18 @@ export default function status(state = List(), action) {
 
         case types.DELETE_TODO_FAILURE:
             return state.push(Map({
-                message: 'Todo isn\'t removed'
+                type: 'notification.deleteFail'
             }));
 
         case types.CREATE_TODO_FAILURE:
             return state.push(Map({
-                message: 'Todo isn\'t created'
+                type: 'notification.createFail'
             }));
 
         case types.EDIT_TODO_FAILURE:
         case types.COMPLETE_TODO_FAILURE:
             return state.push(Map({
-                message: 'Todo isn\'t edited'
+                type: 'notification.editFail'
             }));
 
         default:
