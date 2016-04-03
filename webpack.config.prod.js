@@ -16,6 +16,7 @@ config.entry = {
         'react-addons-css-transition-group',
         'react-addons-pure-render-mixin',
         'react-redux',
+        'react-intl',
         'redux',
         'redux-optimist',
         'immutable/dist/immutable.js',
