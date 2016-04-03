@@ -6,6 +6,23 @@ const clientPath = path.join(__dirname, 'client');
 
 module.exports = {
     context: clientPath,
+    entry: {
+        vendor: [
+            'classnames',
+            'react',
+            'react-dom',
+            'react-addons-css-transition-group',
+            'react-addons-pure-render-mixin',
+            'react-redux',
+            'react-intl',
+            'redux',
+            'redux-optimist',
+            'immutable/dist/immutable.js',
+            'keymirror',
+            'whatwg-fetch'
+        ],
+        index: './index.js'
+    },
     resolve: {
         extensions: [ '', '.js', '.styl' ],
         alias: {
@@ -33,7 +50,6 @@ module.exports = {
     },
     plugins: [
         new webpack.NoErrorsPlugin(),
-
         new webpack.ProvidePlugin({
             React: 'react',
             ReactDOM: 'react-dom'

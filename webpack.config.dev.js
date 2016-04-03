@@ -9,10 +9,6 @@ const config = Object.create(baseConfig);
 
 config.devtool = 'eval';
 
-config.entry = {
-    index: './index.js'
-};
-
 config.output = {
     filename: '[name].js',
     path: staticPath
@@ -34,6 +30,10 @@ config.plugins.push(
     new HtmlWebpackPlugin({
         inject: 'body',
         template: path.join(clientPath, 'index.html')
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: '[name].js'
     }),
     new webpack.DefinePlugin({
         '__DEV__': true,

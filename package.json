@@ -55,7 +55,8 @@
     "redux-optimist": "0.0.2",
     "style-loader": "0.13.0",
     "stylus-loader": "1.4.3",
-    "webpack": "1.12.9"
+    "webpack": "1.12.9",
+    "whatwg-fetch": "0.11.0"
   },
   "devDependencies": {
     "chai-immutable": "git://github.com/astorije/chai-immutable#655d1871a004bad95d9adaed45f52ff586a64ea4",

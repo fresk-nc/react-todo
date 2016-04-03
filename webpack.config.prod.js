@@ -8,23 +8,6 @@ const staticPath = path.join(__dirname, 'static');
 const baseConfig = require('./webpack.config.base.js');
 const config = Object.create(baseConfig);
 
-config.entry = {
-    vendor: [
-        'classnames',
-        'react',
-        'react-dom',
-        'react-addons-css-transition-group',
-        'react-addons-pure-render-mixin',
-        'react-redux',
-        'react-intl',
-        'redux',
-        'redux-optimist',
-        'immutable/dist/immutable.js',
-        'keymirror'
-    ],
-    index: './index.js'
-};
-
 config.output = {
     filename: '[chunkhash]-[name].js',
     path: staticPath
