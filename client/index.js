@@ -1,9 +1,15 @@
 import Root from 'containers/Root';
-import './styles/index.styl';
 import configureStore from './store/configureStore';
 import { addLocaleData } from 'react-intl';
+import config from './config';
+import './styles/index.styl';
 
-const locale = navigator.language.split('-')[0] || 'en';
+let locale = navigator.language.split('-')[0];
+
+if (!config.availableLocales.includes(locale)) {
+    locale = config.defaultLocale;
+}
+
 const waitForChunk = require('bundle?name=[name]!loc/' + locale + '.js');
 
 if (!window.Intl) {
