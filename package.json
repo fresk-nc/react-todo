@@ -53,6 +53,7 @@
     "react-redux": "4.4.0",
     "redux": "3.3.1",
     "redux-optimist": "0.0.2",
+    "serve-favicon": "2.3.0",
     "style-loader": "0.13.0",
     "stylus-loader": "1.4.3",
     "webpack": "1.12.9",

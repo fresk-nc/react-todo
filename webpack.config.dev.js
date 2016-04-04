@@ -28,6 +28,7 @@ config.module.loaders.push(
 
 config.plugins.push(
     new HtmlWebpackPlugin({
+        favicon: 'client/favicon.ico',
         inject: 'body',
         template: path.join(clientPath, 'index.html')
     }),

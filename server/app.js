@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const favicon = require('serve-favicon');
 
 const config = require('./config.js');
 const routes = require('./routes.js');
@@ -16,6 +17,7 @@ morgan.token('body', (req) => JSON.stringify(req.body));
 
 app.set('port', process.env.PORT || config.port);
 app.set('dev', process.env.NODE_ENV === 'development');
+app.use(favicon(path.resolve(__dirname, '../static/favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
