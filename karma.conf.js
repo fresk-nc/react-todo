@@ -8,11 +8,10 @@ module.exports = function(config) {
     config.set({
         frameworks: ['mocha', 'intl-shim', 'chai-immutable', 'sinon-chai'],
         files: [
-            'test/helpers/setup.js',
-            'test/spec/**/*.js'
+            'test/index.js'
         ],
         preprocessors: {
-            'test/**/*.js': ['webpack']
+            'test/index.js': [ 'webpack' ]
         },
         webpack: {
             resolve: {
@@ -63,6 +62,8 @@ module.exports = function(config) {
                 ]
             },
             externals: {
+                'cheerio': 'window',
+                'react/addons': true,
                 'react/lib/ExecutionEnvironment': true,
                 'react/lib/ReactContext': true
             }
@@ -70,8 +71,8 @@ module.exports = function(config) {
         webpackMiddleware: {
             noInfo: true
         },
-        reporters: ['progress'],
-        browsers: ['PhantomJS'],
+        reporters: [ 'progress' ],
+        browsers: [ 'jsdom' ],
         singleRun: true
     });
 };

@@ -1,3 +1,11 @@
+// require all test files
+requireTestFiles();
+
+function requireTestFiles() {
+    const context = require.context('./spec', true, /\.js$/);
+    context.keys().forEach(context);
+}
+
 beforeEach(function() {
     this.sinon = sinon.sandbox.create();
 });

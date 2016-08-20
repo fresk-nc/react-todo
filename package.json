@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "chai-immutable": "git://github.com/astorije/chai-immutable#655d1871a004bad95d9adaed45f52ff586a64ea4",
-    "enzyme": "2.2.0",
+    "enzyme": "2.4.1",
     "eslint": "2.2.0",
     "eslint-plugin-react": "4.0.0",
     "husky": "0.10.2",
@@ -69,8 +69,8 @@
     "karma-babel-preprocessor": "6.0.1",
     "karma-chai-immutable": "1.0.2",
     "karma-intl-shim": "1.0.3",
+    "karma-jsdom-launcher": "4.0.0",
     "karma-mocha": "0.2.1",
-    "karma-phantomjs-launcher": "1.0.0",
     "karma-sinon-chai": "1.1.0",
     "karma-webpack": "1.7.0",
     "mocha": "2.4.5",
