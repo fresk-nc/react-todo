@@ -1,7 +1,9 @@
 import { FormattedMessage } from 'react-intl';
 import styles from './LoadError.styl';
 
-class LoadError extends React.Component {
+export default class LoadError extends React.PureComponent {
+
+    static displayName = 'LoadError';
 
     render() {
         return (
@@ -15,9 +17,4 @@ class LoadError extends React.Component {
             </div>
         );
     }
-
 }
-
-LoadError.displayName = 'LoadError';
-
-export default LoadError;

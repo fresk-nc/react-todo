@@ -4,7 +4,15 @@ import Spinner from 'components/Spinner';
 import LoadError from 'components/LoadError';
 import styles from './MainSection.styl';
 
-class MainSection extends React.Component {
+export default class MainSection extends React.Component {
+
+    static displayName = 'MainSection';
+
+    static propTypes = {
+        todos: React.PropTypes.object,
+        actions: React.PropTypes.object,
+        status: React.PropTypes.object
+    };
 
     constructor(props) {
         super(props);
@@ -68,15 +76,4 @@ class MainSection extends React.Component {
             </main>
         );
     }
-
 }
-
-MainSection.displayName = 'MainSection';
-
-MainSection.propTypes = {
-    todos: React.PropTypes.object,
-    actions: React.PropTypes.object,
-    status: React.PropTypes.object
-};
-
-export default MainSection;

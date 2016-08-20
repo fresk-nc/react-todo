@@ -1,6 +1,14 @@
 import styles from './Button.styl';
 
-class Button extends React.Component {
+export default class Button extends React.PureComponent {
+
+    static displayName = 'Button';
+
+    static propTypes = {
+        onClick: React.PropTypes.func,
+        type: React.PropTypes.string.isRequired,
+        children: React.PropTypes.node
+    };
 
     render() {
         return (
@@ -9,15 +17,4 @@ class Button extends React.Component {
             </span>
         );
     }
-
 }
-
-Button.displayName = 'Button';
-
-Button.propTypes = {
-    onClick: React.PropTypes.func,
-    type: React.PropTypes.string.isRequired,
-    children: React.PropTypes.node
-};
-
-export default Button;

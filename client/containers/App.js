@@ -10,6 +10,15 @@ import Snackbar from 'components/Snackbar';
 
 class App extends React.Component {
 
+    static displayName = 'App';
+
+    static propTypes = {
+        actions: React.PropTypes.object.isRequired,
+        todos: React.PropTypes.object.isRequired,
+        status: React.PropTypes.object.isRequired,
+        notifications: React.PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
         this._handleTimeoutSnackbar = this._handleTimeoutSnackbar.bind(this);
@@ -66,17 +75,7 @@ class App extends React.Component {
             </div>
         );
     }
-
 }
-
-App.displayName = 'App';
-
-App.propTypes = {
-    actions: React.PropTypes.object.isRequired,
-    todos: React.PropTypes.object.isRequired,
-    status: React.PropTypes.object.isRequired,
-    notifications: React.PropTypes.object.isRequired
-};
 
 function mapStateToProps(state) {
     return {

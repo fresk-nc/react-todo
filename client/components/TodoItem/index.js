@@ -3,7 +3,25 @@ import classNames from 'classnames';
 import { injectIntl } from 'react-intl';
 import styles from './TodoItem.styl';
 
-export default class TodoItem extends React.PureComponent {
+class TodoItem extends React.PureComponent {
+
+    static displayName = 'TodoItem';
+
+    static propTypes = {
+        createTodo: React.PropTypes.func.isRequired,
+        completeTodo: React.PropTypes.func.isRequired,
+        deleteLocalTodo: React.PropTypes.func.isRequired,
+        deleteTodo: React.PropTypes.func.isRequired,
+        editTodo: React.PropTypes.func.isRequired,
+
+        todo: React.PropTypes.shape({
+            id: React.PropTypes.number.isRequired,
+            text: React.PropTypes.string.isRequired,
+            completed: React.PropTypes.bool.isRequired,
+            new: React.PropTypes.boolean
+        }),
+        intl: React.PropTypes.object.isRequired
+    };
 
     constructor(props) {
         super(props);
@@ -135,23 +153,5 @@ export default class TodoItem extends React.PureComponent {
         );
     }
 }
-
-TodoItem.displayName = 'TodoItem';
-
-TodoItem.propTypes = {
-    createTodo: React.PropTypes.func.isRequired,
-    completeTodo: React.PropTypes.func.isRequired,
-    deleteLocalTodo: React.PropTypes.func.isRequired,
-    deleteTodo: React.PropTypes.func.isRequired,
-    editTodo: React.PropTypes.func.isRequired,
-
-    todo: React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        text: React.PropTypes.string.isRequired,
-        completed: React.PropTypes.bool.isRequired,
-        new: React.PropTypes.boolean
-    }),
-    intl: React.PropTypes.object.isRequired
-};
 
 export default injectIntl(TodoItem);

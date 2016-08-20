@@ -1,15 +1,12 @@
 import styles from './Header.styl';
 
-class Header extends React.Component {
+export default class Header extends React.PureComponent {
+
+    static displayName = 'Header';
 
     render() {
         return (
             <header className={styles.wrap}></header>
         );
     }
-
 }
-
-Header.displayName = 'Header';
-
-export default Header;

@@ -2,7 +2,14 @@ import TodoItem from 'components/TodoItem';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import styles from './TodoList.styl';
 
-class TodoList extends React.Component {
+export default class TodoList extends React.Component {
+
+    static displayName = 'TodoList';
+
+    static propTypes = {
+        actions: React.PropTypes.object.isRequired,
+        todos: React.PropTypes.object.isRequired
+    };
 
     constructor(props) {
         super(props);
@@ -30,14 +37,4 @@ class TodoList extends React.Component {
             </ReactCSSTransitionGroup>
         );
     }
-
 }
-
-TodoList.displayName = 'TodoList';
-
-TodoList.propTypes = {
-    actions: React.PropTypes.object.isRequired,
-    todos: React.PropTypes.object.isRequired
-};
-
-export default TodoList;

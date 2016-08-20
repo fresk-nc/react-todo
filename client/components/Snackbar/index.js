@@ -3,7 +3,20 @@ import styles from './Snackbar.styl';
 
 const ANIMATION_LENGTH = 200;
 
-class Snackbar extends React.Component {
+export default class Snackbar extends React.Component {
+
+    static displayName = 'Snackbar';
+
+    static propTypes = {
+        onTimeout: React.PropTypes.func.isRequired,
+        children: React.PropTypes.node,
+        timeout: React.PropTypes.number,
+        active: React.PropTypes.bool.isRequired
+    };
+
+    static defaultProps = {
+        timeout: 2500
+    };
 
     constructor(props) {
         super(props);
@@ -62,20 +75,4 @@ class Snackbar extends React.Component {
             </div>
         );
     }
-
 }
-
-Snackbar.displayName = 'Snackbar';
-
-Snackbar.propTypes = {
-    onTimeout: React.PropTypes.func.isRequired,
-    children: React.PropTypes.node,
-    timeout: React.PropTypes.number,
-    active: React.PropTypes.bool.isRequired
-};
-
-Snackbar.defaultProps = {
-    timeout: 2500
-};
-
-export default Snackbar;

@@ -1,7 +1,9 @@
 import { FormattedMessage } from 'react-intl';
 import styles from './Footer.styl';
 
-class Footer extends React.Component {
+export default class Footer extends React.PureComponent {
+
+    static displayName = 'Footer';
 
     render() {
         return (
@@ -24,9 +26,4 @@ class Footer extends React.Component {
             </footer>
         );
     }
-
 }
-
-Footer.displayName = 'Footer';
-
-export default Footer;
