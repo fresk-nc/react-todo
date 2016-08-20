@@ -1,10 +1,9 @@
 import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { injectIntl } from 'react-intl';
 import styles from './TodoItem.styl';
 
-export default class TodoItem extends React.Component {
+export default class TodoItem extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -13,8 +12,6 @@ export default class TodoItem extends React.Component {
             editing: false,
             editText: props.todo.text
         };
-
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
     componentDidUpdate() {
