@@ -1,12 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
+/* eslint-disable max-len */
 
-var testPath = path.join(__dirname, 'test');
-var clientPath = path.join(__dirname, 'client');
+const path = require('path');
+const webpack = require('webpack');
+
+const testPath = path.join(__dirname, 'test');
+const clientPath = path.join(__dirname, 'client');
 
 module.exports = function(config) {
     config.set({
-        frameworks: ['mocha', 'intl-shim', 'chai-immutable', 'sinon-chai'],
+        frameworks: [ 'mocha', 'intl-shim', 'chai-immutable', 'sinon-chai' ],
         files: [
             'test/index.js'
         ],
@@ -15,7 +17,7 @@ module.exports = function(config) {
         },
         webpack: {
             resolve: {
-                extensions: ['', '.js', '.json', '.styl'],
+                extensions: [ '', '.js', '.json', '.styl' ],
                 alias: {
                     actions: path.join(clientPath, 'actions'),
                     components: path.join(clientPath, 'components'),
@@ -49,7 +51,7 @@ module.exports = function(config) {
                                 'transform-object-assign'
                             ]
                         },
-                        include: [clientPath, testPath]
+                        include: [ clientPath, testPath ]
                     },
                     {
                         test: /\.styl$/,

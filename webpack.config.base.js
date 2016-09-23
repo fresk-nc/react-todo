@@ -35,9 +35,9 @@ module.exports = {
         }
     },
     resolveLoader: {
-        modulesDirectories: ['node_modules'],
-        moduleTemplates: ['*-loader', '*'],
-        extensions: ['', '.js']
+        modulesDirectories: [ 'node_modules' ],
+        moduleTemplates: [ '*-loader', '*' ],
+        extensions: [ '', '.js' ]
     },
     module: {
         noParse: [
