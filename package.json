@@ -62,7 +62,7 @@
     "whatwg-fetch": "0.11.0"
   },
   "devDependencies": {
-    "chai-immutable": "git://github.com/astorije/chai-immutable#655d1871a004bad95d9adaed45f52ff586a64ea4",
+    "chai-immutable": "1.6.0",
     "enzyme": "2.4.1",
     "eslint": "3.3.1",
     "eslint-plugin-react": "6.1.2",
