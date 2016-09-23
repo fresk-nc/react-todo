@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('../mongoose.js');
+const mongoose = require('../libs/mongoose.js');
 
 const todoSchema = new mongoose.Schema({
     id: {

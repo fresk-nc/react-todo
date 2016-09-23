@@ -1,50 +1,43 @@
+/* eslint-disable no-console */
+
 'use strict';
 
 const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
-const favicon = require('serve-favicon');
+const koa = require('koa');
+const config = require('config');
+const uuid = require('node-uuid');
+const router = require('./routes');
+const app = koa();
 
-const config = require('./config.js');
-const routes = require('./routes.js');
-const currentUser = require('./middleware/currentUser.js');
-
-const app = express();
-
-morgan.token('body', (req) => JSON.stringify(req.body));
-
-app.set('port', process.env.PORT || config.port);
-app.set('dev', process.env.NODE_ENV === 'development');
-app.use(favicon(path.resolve(__dirname, '../static/favicon.ico')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(currentUser);
-app.use(morgan(':method :url :status :response-time ms :body'));
-
-if (!app.get('dev')) {
-    app.use(express.static(path.resolve(__dirname, '../static')));
+app.use(require('koa-favicon')());
+if (process.env.NODE_ENV !== 'development') {
+    app.use(require('koa-static')(path.resolve(__dirname, '../static')));
 }
-
-app.use(routes);
-
-app.use((req, res) => {
-    res.status(404);
-    res.send({ error: 'Not found' });
+app.use(require('koa-logger')());
+app.use(function * (next) {
+    try {
+        yield* next;
+    } catch (e) {
+        if (e.status) {
+            this.body = e.message;
+            this.statusCode = e.status;
+        } else {
+            this.body = 'Server Error';
+            this.statusCode = 500;
+            console.error(e.message, e.stack);
+        }
+    }
 });
-
-app.use((err, req, res) => {
-    res.status(500);
-    res.send({ error: 'Server error' });
-});
-
-app.listen(app.get('port'), (err) => {
-    if (err) {
-        console.log(err); // eslint-disable-line
-        return;
+app.use(require('koa-bodyparser')());
+app.use(function * (next) {
+    if (!this.cookies.get('uid')) {
+        this.cookies.set('uid', uuid.v1());
     }
 
-    console.log(`Server listening on port ${app.get('port')}`); // eslint-disable-line
+    yield* next;
+});
+app.use(router.routes());
+
+app.listen(config.port, () => {
+    console.log(`Server listening on port ${config.port}`);
 });
