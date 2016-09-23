@@ -19,18 +19,14 @@ router.get('/api/todos', (req, res, next) => {
 });
 
 router.post('/api/todos', (req, res, next) => {
-    const newTodo = new TodoModel({
-        id: req.body.id,
-        uid: req.cookies.uid,
-        text: req.body.text,
-        completed: req.body.completed
-    });
-
-    newTodo
-        .save()
-        .then(() => {
-            res.send({ message: 'ok' });
+    TodoModel
+        .create({
+            id: req.body.id,
+            uid: req.cookies.uid,
+            text: req.body.text,
+            completed: req.body.completed
         })
+        .then(() => res.send({ message: 'ok' }))
         .catch((err) => {
             next(err, req, res);
         });
@@ -60,10 +56,9 @@ router.put('/api/todos/:id', (req, res, next) => {
                 todo.completed = req.body.completed;
             }
 
-            todo.save().then(() => {
-                res.send({ message: 'ok' });
-            });
+            return todo.save();
         })
+        .then(() => res.send({ message: 'ok' }))
         .catch((err) => {
             next(err, req, res);
         });
@@ -85,10 +80,9 @@ router.delete('/api/todos/:id', (req, res, next) => {
                 return res.send({ error: 'Forbidden' });
             }
 
-            todo.remove().then(() => {
-                res.send({ message: 'ok' });
-            });
+            return todo.remove();
         })
+        .then(() => res.send({ message: 'ok' }))
         .catch((err) => {
             next(err, req, res);
         });
