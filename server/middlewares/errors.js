@@ -5,11 +5,11 @@ module.exports = function * (next) {
         yield* next;
     } catch (e) {
         if (e.status) {
-            this.body = e.message;
-            this.statusCode = e.status;
+            this.body = { error: e.message };
+            this.status = e.status;
         } else {
             this.body = 'Server Error';
-            this.statusCode = 500;
+            this.status = 500;
             console.error(e.message, e.stack);
         }
     }

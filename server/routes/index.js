@@ -21,11 +21,11 @@ router.put('/api/todos/:id', function * () {
     const todo = yield TodoModel.findOne({ id: this.params.id });
 
     if (!todo) {
-        this.throw(404, { error: 'Not found' });
+        this.throw(404);
     }
 
     if (todo.uid !== this.cookies.get('uid')) {
-        this.throw(403, { error: 'Forbidden' });
+        this.throw(403);
     }
 
     for (let key in this.request.body) {
@@ -41,11 +41,11 @@ router.delete('/api/todos/:id', function * () {
     const todo = yield TodoModel.findOne({ id: this.params.id });
 
     if (!todo) {
-        this.throw(404, { error: 'Not found' });
+        this.throw(404);
     }
 
     if (todo.uid !== this.cookies.get('uid')) {
-        this.throw(403, { error: 'Forbidden' });
+        this.throw(403);
     }
 
     yield todo.remove();
