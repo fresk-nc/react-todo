@@ -35,7 +35,7 @@ config.module.loaders.push(
 config.plugins.push(
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-        favicon: 'client/favicon.ico',
+        favicon: './favicon.ico',
         inject: 'body',
         template: path.join(clientPath, 'index.html'),
         minify: {
