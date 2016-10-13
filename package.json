@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "rm -rf static",
     "watch": "./node_modules/.bin/webpack-dev-server --inline --hot --config webpack.config.dev.js",
-    "start": "NODE_CONFIG_DIR=./server/config NODE_ENV=production node ./server/app.js",
-    "start:dev": "NODE_CONFIG_DIR=./server/config NODE_ENV=development nodemon ./server/app.js",
+    "start": "NODE_PATH=./server NODE_CONFIG_DIR=./server/config NODE_ENV=production node ./server/app.js",
+    "start:dev": "NODE_PATH=./server NODE_CONFIG_DIR=./server/config NODE_ENV=development nodemon ./server/app.js",
     "daemon": "./scripts/daemon.sh",
     "build:dev": "npm run clean && OUTPUT=./static ./node_modules/.bin/webpack --progress --config webpack.config.dev.js",
     "build:prod": "npm run clean && OUTPUT=./static ./node_modules/.bin/webpack --progress --config webpack.config.prod.js",
@@ -51,6 +51,7 @@
     "mongoose": "4.4.6",
     "node-uuid": "1.4.7",
     "postcss-loader": "0.8.0",
+    "ramda": "0.22.1",
     "react": "15.3.1",
     "react-addons-css-transition-group": "15.3.1",
     "react-dom": "15.3.1",

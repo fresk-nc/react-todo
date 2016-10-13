@@ -1,6 +1,7 @@
 'use strict';
 
-const mongoose = require('../libs/mongoose.js');
+const mongoose = require('libs/mongoose.js');
+const R = require('ramda');
 
 const todoSchema = new mongoose.Schema({
     id: {
@@ -16,6 +17,11 @@ const todoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
+}, {
+    timestamps: true
 });
+
+todoSchema.statics.getPublicFields = R.pick([ 'id', 'uid', 'text', 'completed' ]);
+todoSchema.statics.getMutableFields = R.pick([ 'text', 'completed' ]);
 
 module.exports = mongoose.model('Todo', todoSchema);
