@@ -1,54 +1,41 @@
-import { List, Map, fromJS } from 'immutable';
+import { Map, OrderedMap } from 'immutable';
+import TodoRecord from 'records/TodoRecord';
+import createReducers from 'utils/createReducer';
 import types from 'constants/ActionTypes';
 
-export default function todos(state = List(), action) {
-    switch (action.type) {
+export default createReducers(new OrderedMap(), {
+    [types.GET_TODOS_SUCCESS](state, action) {
+        return action.response.reduce((todos, todo) => {
+            return todos.set(todo.id, new TodoRecord(todo));
+        }, new OrderedMap());
+    },
 
-        case types.GET_TODOS_SUCCESS:
-            return state.merge(fromJS(action.response));
+    [types.ADD_TODO](state, action) {
+        const lastTodo = state.last();
 
-        case types.ADD_TODO:
-            return state.push(Map({
-                id: action.id,
-                text: '',
-                completed: false,
-                new: true
-            }));
+        return state.set(action.id, new TodoRecord({
+            id: action.id,
+            new: true,
+            sequence: lastTodo ? lastTodo.sequence + 1 : 1
+        }));
+    },
 
-        case types.CREATE_TODO:
-            return state.map((todo) => {
-                if (todo.get('id') !== action.id) {
-                    return todo;
-                }
+    [types.CREATE_TODO](state, action) {
+        return state.mergeIn([ action.id ], Map({
+            text: action.text,
+            new: false
+        }));
+    },
 
-                return todo.merge(Map({
-                    text: action.text,
-                    new: false
-                }));
-            });
+    [types.EDIT_TODO](state, action) {
+        return state.setIn([ action.id, 'text' ], action.text);
+    },
 
-        case types.EDIT_TODO:
-            return state.map((todo) => {
-                if (todo.get('id') !== action.id) {
-                    return todo;
-                }
+    [types.DELETE_TODO](state, action) {
+        return state.delete(action.id);
+    },
 
-                return todo.set('text', action.text);
-            });
-
-        case types.DELETE_TODO:
-            return state.filter((todo) => todo.get('id') !== action.id);
-
-        case types.COMPLETE_TODO:
-            return state.map((todo) => {
-                if (todo.get('id') !== action.id) {
-                    return todo;
-                }
-
-                return todo.update('completed', v => !v);
-            });
-
-        default:
-            return state;
+    [types.COMPLETE_TODO](state, action) {
+        return state.updateIn([ action.id, 'completed' ], v => !v);
     }
-}
+});

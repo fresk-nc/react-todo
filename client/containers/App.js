@@ -13,6 +13,7 @@ class App extends React.Component {
     static displayName = 'App';
 
     static propTypes = {
+        // fixme: object -> instanceOf(List || Map)
         actions: React.PropTypes.object.isRequired,
         todos: React.PropTypes.object.isRequired,
         status: React.PropTypes.object.isRequired,
@@ -79,7 +80,8 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        todos: state.todos,
+        // fixme: use reselect
+        todos: state.todos.sort((a, b) => a.sequence - b.sequence),
         status: state.status,
         notifications: state.notifications
     };

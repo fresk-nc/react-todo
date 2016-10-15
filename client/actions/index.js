@@ -1,3 +1,4 @@
+import uuid from 'node-uuid';
 import { CALL_API } from 'middleware/api';
 import types from 'constants/ActionTypes';
 
@@ -12,17 +13,20 @@ export function getTodos() {
 }
 
 export function createLocalTodo() {
-    return { type: types.ADD_TODO, id: Date.now() };
+    return { type: types.ADD_TODO, id: uuid.v1() };
 }
 
-export function createTodo(id, text) {
+export function createTodo(todo, text) {
     return {
-        id,
+        id: todo.id,
         text,
         [CALL_API]: {
             endpoint: 'api/todos',
             method: 'POST',
-            body: { id, text },
+            body: {
+                ...todo.toJS(),
+                text
+            },
             types: [ types.CREATE_TODO, types.CREATE_TODO_SUCCESS, types.CREATE_TODO_FAILURE ],
             meta: { optimist: true }
         }

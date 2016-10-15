@@ -24,13 +24,13 @@ router.param('id', function * (id, next) {
 
 router.get('/', function * () {
     const uid = this.cookies.get('uid');
-    const todos = yield TodoModel.find({ uid: uid });
+    const todos = yield TodoModel.find({ uid: uid }).sort({ sequence: 1 });
 
     this.body = R.map(TodoModel.getPublicFields, todos);
 });
 
 router.post('/', function * () {
-    yield TodoModel.create(Object.assign({}, this.request.body, {
+    yield TodoModel.create(Object.assign({}, TodoModel.getPublicFields(this.request.body), {
         uid: this.cookies.get('uid')
     }));
 

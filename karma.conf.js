@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.dev');
 
 const testPath = path.join(__dirname, 'test');
 const clientPath = path.join(__dirname, 'client');
@@ -16,18 +17,7 @@ module.exports = function(config) {
             'test/index.js': [ 'webpack' ]
         },
         webpack: {
-            resolve: {
-                extensions: [ '', '.js', '.json', '.styl' ],
-                alias: {
-                    actions: path.join(clientPath, 'actions'),
-                    components: path.join(clientPath, 'components'),
-                    constants: path.join(clientPath, 'constants'),
-                    containers: path.join(clientPath, 'containers'),
-                    middleware: path.join(clientPath, 'middleware'),
-                    reducers: path.join(clientPath, 'reducers'),
-                    loc: path.join(clientPath, 'loc')
-                }
-            },
+            resolve: webpackConfig.resolve,
             plugins: [
                 new webpack.DefinePlugin({
                     NODE_ENV: JSON.stringify('development'),

@@ -25,11 +25,11 @@ export default class TodoList extends React.Component {
                 transitionName="todo-list"
                 transitionEnterTimeout={300}
                 transitionLeaveTimeout={300}>
-                {todos.map((todo) => {
+                {todos.valueSeq().map((todo) => {
                     return (
                         <TodoItem
-                            key={todo.get('id')}
-                            todo={todo.toObject()}
+                            key={todo.id}
+                            todo={todo}
                             {...actions}
                         />
                     );

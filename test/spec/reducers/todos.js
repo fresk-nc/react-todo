@@ -1,567 +1,268 @@
+import { OrderedMap } from 'immutable';
+import TodoRecord from 'records/TodoRecord';
 import todos from 'reducers/todos';
 import types from 'constants/ActionTypes';
-import { List, fromJS } from 'immutable';
 
-describe('todos reducer', () => {
-
-    it('should provide the initial state', () => {
-        expect(todos(undefined, {})).to.be.equal(List());
-    });
-
-    it('should return the current state if the action is not known', () => {
-        expect(
-            todos(
-                fromJS([
-                    {
-                        id: 100,
-                        text: 'buy milk',
-                        completed: false
-                    }
-                ]),
-                {
-                    type: 'ACTION!'
-                }
-            )
-        ).to.be.equal(
-            fromJS([
-                {
-                    id: 100,
-                    text: 'buy milk',
-                    completed: false
-                }
-            ])
-        );
-    });
-
-    describe('GET_TODOS_SUCCESS action ->', () => {
-
-        it('should return the received todos', () => {
-            expect(
-                todos(List(), {
-                    type: types.GET_TODOS_SUCCESS,
-                    response: [
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        }
-                    ]
-                })
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    }
-                ])
-            );
+describe('reducers', () => {
+    describe('todos', () => {
+        it('should provide the initial state', () => {
+            expect(todos(undefined, {})).to.be.equal(OrderedMap());
         });
 
-    });
-
-    describe('ADD_TODO action ->', () => {
-
-        it('should add the temporary todo into the empty list', () => {
-            expect(
-                todos(List(), {
-                    type: types.ADD_TODO,
-                    id: 100
-                })
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 100,
-                        text: '',
-                        completed: false,
-                        new: true
-                    }
-                ])
-            );
-        });
-
-        it('should add the temporary todo into the not empty list', () => {
+        it('should return the current state if the action is not known', () => {
             expect(
                 todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        }
-                    ]),
+                    OrderedMap({
+                        '100': new TodoRecord({
+                            id: '100',
+                            text: 'buy milk'
+                        })
+                    }),
                     {
+                        type: 'ACTION!'
+                    }
+                )
+            ).to.be.equal(
+                OrderedMap({
+                    '100': new TodoRecord({
+                        id: '100',
+                        text: 'buy milk'
+                    })
+                })
+            );
+        });
+
+        describe('GET_TODOS_SUCCESS action ->', () => {
+            it('should return the received todos', () => {
+                expect(
+                    todos(OrderedMap(), {
+                        type: types.GET_TODOS_SUCCESS,
+                        response: [
+                            {
+                                id: '99',
+                                text: 'buy milk',
+                                completed: false,
+                                sequence: 1
+                            },
+                            {
+                                id: '100',
+                                text: 'buy bread',
+                                completed: false,
+                                sequence: 2
+                            }
+                        ]
+                    })
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
+                            text: 'buy milk',
+                            sequence: 1
+                        }),
+                        '100': new TodoRecord({
+                            id: '100',
+                            text: 'buy bread',
+                            sequence: 2
+                        })
+                    })
+                );
+            });
+        });
+
+        describe('ADD_TODO action ->', () => {
+            it('should add the temporary todo into the empty list', () => {
+                expect(
+                    todos(OrderedMap(), {
                         type: types.ADD_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 100,
-                        text: '',
-                        completed: false,
-                        new: true
-                    }
-                ])
-            );
-        });
+                        id: '100'
+                    })
+                ).to.be.equal(
+                    OrderedMap({
+                        '100': new TodoRecord({
+                            id: '100',
+                            new: true,
+                            sequence: 1
+                        })
+                    })
+                );
+            });
 
-    });
-
-    describe('CREATE_TODO action ->', () => {
-
-        it('should create the todo if there is the temporary todo', () => {
-            expect(
-                todos(
-                    fromJS([
+            it('should add the temporary todo into the not empty list', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '99': new TodoRecord({
+                                id: '99',
+                                text: 'buy bread',
+                                sequence: 1
+                            })
+                        }),
                         {
-                            id: 100,
-                            text: '',
-                            completed: false,
-                            new: true
+                            type: types.ADD_TODO,
+                            id: '100'
                         }
-                    ]),
-                    {
-                        type: types.CREATE_TODO,
-                        id: 100,
-                        text: 'buy milk'
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 100,
-                        text: 'buy milk',
-                        completed: false,
-                        new: false
-                    }
-                ])
-            );
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
+                            text: 'buy bread',
+                            sequence: 1
+                        }),
+                        '100': new TodoRecord({
+                            id: '100',
+                            new: true,
+                            sequence: 2
+                        })
+                    })
+                );
+            });
         });
 
-        it('should return the current state, if there is no the temporary todo', () => {
-            expect(
-                todos(
-                    fromJS([
+        describe('CREATE_TODO action ->', () => {
+            it('should create the todo', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '100': new TodoRecord({
+                                id: '100',
+                                new: true
+                            })
+                        }),
                         {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
+                            type: types.CREATE_TODO,
+                            id: '100',
+                            text: 'buy milk'
                         }
-                    ]),
-                    {
-                        type: types.CREATE_TODO,
-                        id: 100,
-                        text: 'buy milk'
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    }
-                ])
-            );
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '100': new TodoRecord({
+                            id: '100',
+                            text: 'buy milk'
+                        })
+                    })
+                );
+            });
         });
 
-    });
-
-    describe('EDIT_TODO action ->', () => {
-
-        it('should change the todo at the beginning of the list', () => {
-            expect(
-                todos(
-                    fromJS([
+        describe('EDIT_TODO action ->', () => {
+            it('should change the todo', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '99': new TodoRecord({
+                                id: '99',
+                                text: 'buy bread'
+                            }),
+                            '100': new TodoRecord({
+                                id: '100',
+                                text: 'buy milk'
+                            })
+                        }),
                         {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        },
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
+                            type: types.EDIT_TODO,
+                            id: '100',
+                            text: 'buy potato'
                         }
-                    ]),
-                    {
-                        type: types.EDIT_TODO,
-                        id: 100,
-                        text: 'buy potato'
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 100,
-                        text: 'buy potato',
-                        completed: false
-                    },
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    }
-                ])
-            );
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
+                            text: 'buy bread'
+                        }),
+                        '100': new TodoRecord({
+                            id: '100',
+                            text: 'buy potato'
+                        })
+                    })
+                );
+            });
         });
 
-        it('should change the todo at the end of the list', () => {
-            expect(
-                todos(
-                    fromJS([
+        describe('DELETE_TODO action ->', () => {
+            it('should delete the todo', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '99': new TodoRecord({
+                                id: '99',
+                                text: 'buy bread'
+                            }),
+                            '100': new TodoRecord({
+                                id: '100',
+                                text: 'buy milk'
+                            })
+                        }),
                         {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
+                            type: types.DELETE_TODO,
+                            id: '100'
                         }
-                    ]),
-                    {
-                        type: types.EDIT_TODO,
-                        id: 100,
-                        text: 'buy potato'
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 100,
-                        text: 'buy potato',
-                        completed: false
-                    }
-                ])
-            );
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
+                            text: 'buy bread'
+                        })
+                    })
+                );
+            });
         });
 
-        it('should return the current state, if there is no the todo', () => {
-            expect(
-                todos(
-                    fromJS([
+        describe('COMPLETE_TODO ->', () => {
+            it('should mark the todo as completed', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '99': new TodoRecord({
+                                id: '99',
+                                text: 'buy bread',
+                                completed: false
+                            })
+                        }),
                         {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
+                            type: types.COMPLETE_TODO,
+                            id: '99'
                         }
-                    ]),
-                    {
-                        type: types.EDIT_TODO,
-                        id: 500,
-                        text: 'buy potato'
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 100,
-                        text: 'buy milk',
-                        completed: false
-                    }
-                ])
-            );
-        });
-
-    });
-
-    describe('DELETE_TODO action ->', () => {
-
-        it('should delete the todo at the beginning of the list', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        },
-                        {
-                            id: 99,
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
                             text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            text: 'buy eggs',
                             completed: true
-                        }
-                    ]),
-                    {
-                        type: types.DELETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 101,
-                        text: 'buy eggs',
-                        completed: true
-                    }
-                ])
-            );
-        });
+                        })
+                    })
+                );
+            });
 
-        it('should delete the todo at the middle of the list', () => {
-            expect(
-                todos(
-                    fromJS([
+            it('should mark the todo as uncompleted', () => {
+                expect(
+                    todos(
+                        OrderedMap({
+                            '99': new TodoRecord({
+                                id: '99',
+                                text: 'buy bread',
+                                completed: true
+                            })
+                        }),
                         {
-                            id: 99,
+                            type: types.COMPLETE_TODO,
+                            id: '99'
+                        }
+                    )
+                ).to.be.equal(
+                    OrderedMap({
+                        '99': new TodoRecord({
+                            id: '99',
                             text: 'buy bread',
                             completed: false
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            text: 'buy eggs',
-                            completed: true
-                        }
-                    ]),
-                    {
-                        type: types.DELETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 101,
-                        text: 'buy eggs',
-                        completed: true
-                    }
-                ])
-            );
+                        })
+                    }),
+                );
+            });
         });
-
-        it('should delete the todo at the end of the list', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            text: 'buy eggs',
-                            completed: true
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        }
-                    ]),
-                    {
-                        type: types.DELETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 101,
-                        text: 'buy eggs',
-                        completed: true
-                    }
-                ])
-            );
-        });
-
-        it('should return the current state, if there is no the todo', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        }
-                    ]),
-                    {
-                        type: types.DELETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    }
-                ])
-            );
-        });
-
     });
-
-    describe('COMPLETE_TODO ->', () => {
-
-        it('should mark the todo as completed', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            text: 'buy eggs',
-                            completed: true
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        }
-                    ]),
-                    {
-                        type: types.COMPLETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 101,
-                        text: 'buy eggs',
-                        completed: true
-                    },
-                    {
-                        id: 100,
-                        text: 'buy milk',
-                        completed: true
-                    }
-                ])
-            );
-        });
-
-        it('should mark the todo as uncompleted', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            text: 'buy eggs',
-                            completed: true
-                        },
-                        {
-                            id: 100,
-                            text: 'buy milk',
-                            completed: false
-                        }
-                    ]),
-                    {
-                        type: types.COMPLETE_TODO,
-                        id: 101
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    },
-                    {
-                        id: 101,
-                        text: 'buy eggs',
-                        completed: false
-                    },
-                    {
-                        id: 100,
-                        text: 'buy milk',
-                        completed: false
-                    }
-                ])
-            );
-        });
-
-        it('should return the current state, if there is no the todo', () => {
-            expect(
-                todos(
-                    fromJS([
-                        {
-                            id: 99,
-                            text: 'buy bread',
-                            completed: false
-                        }
-                    ]),
-                    {
-                        type: types.COMPLETE_TODO,
-                        id: 100
-                    }
-                )
-            ).to.be.equal(
-                fromJS([
-                    {
-                        id: 99,
-                        text: 'buy bread',
-                        completed: false
-                    }
-                ])
-            );
-        });
-
-    });
-
 });

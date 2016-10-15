@@ -1,6 +1,7 @@
 import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
 import classNames from 'classnames';
 import { injectIntl } from 'react-intl';
+import TodoItemRecord from 'records/TodoRecord';
 import styles from './TodoItem.styl';
 
 class TodoItem extends React.PureComponent {
@@ -14,12 +15,7 @@ class TodoItem extends React.PureComponent {
         deleteTodo: React.PropTypes.func.isRequired,
         editTodo: React.PropTypes.func.isRequired,
 
-        todo: React.PropTypes.shape({
-            id: React.PropTypes.number.isRequired,
-            text: React.PropTypes.string.isRequired,
-            completed: React.PropTypes.bool.isRequired,
-            new: React.PropTypes.boolean
-        }),
+        todo: React.PropTypes.instanceOf(TodoItemRecord).isRequired,
         intl: React.PropTypes.object.isRequired
     };
 
@@ -86,7 +82,7 @@ class TodoItem extends React.PureComponent {
         }
 
         if (todo.new) {
-            createTodo(todo.id, newTitle);
+            createTodo(todo, newTitle);
         } else {
             editTodo(todo.id, newTitle);
         }

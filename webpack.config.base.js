@@ -1,6 +1,7 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const clientPath = path.join(__dirname, 'client');
 
@@ -23,15 +24,17 @@ module.exports = {
         index: './index.js'
     },
     resolve: {
-        extensions: [ '', '.js', '.styl' ],
+        extensions: [ '', '.js', '.json', '.styl' ],
         alias: {
             actions: path.join(clientPath, 'actions'),
             components: path.join(clientPath, 'components'),
             constants: path.join(clientPath, 'constants'),
             containers: path.join(clientPath, 'containers'),
             middleware: path.join(clientPath, 'middleware'),
+            records: path.join(clientPath, 'records'),
             reducers: path.join(clientPath, 'reducers'),
-            loc: path.join(clientPath, 'loc')
+            loc: path.join(clientPath, 'loc'),
+            utils: path.join(clientPath, 'utils')
         }
     },
     resolveLoader: {
@@ -48,6 +51,16 @@ module.exports = {
         ]
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            favicon: './favicon.ico',
+            inject: 'body',
+            template: path.join(clientPath, 'index.html'),
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                preserveLineBreaks: true
+            }
+        }),
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             React: 'react',

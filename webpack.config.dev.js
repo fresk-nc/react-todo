@@ -2,7 +2,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const clientPath = path.join(__dirname, 'client');
 const staticPath = path.join(__dirname, 'static');
@@ -29,11 +28,6 @@ config.module.loaders.push(
 );
 
 config.plugins.push(
-    new HtmlWebpackPlugin({
-        favicon: './favicon.ico',
-        inject: 'body',
-        template: path.join(clientPath, 'index.html')
-    }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         filename: '[name].js'

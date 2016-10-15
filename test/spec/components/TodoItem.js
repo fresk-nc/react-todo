@@ -1,4 +1,5 @@
 import TodoItem from 'components/TodoItem';
+import TodoRecord from 'records/TodoRecord';
 import styles from 'components/TodoItem/TodoItem.styl';
 import { ENTER, ESCAPE } from 'constants/KeyboardCodes';
 import { shallow } from 'enzyme';
@@ -37,15 +38,13 @@ function setup(props) {
 }
 
 function mockTodo(overrides) {
-    return Object.assign({}, {
-        id: 1,
-        text: 'buy milk',
-        completed: false
-    }, overrides);
+    return new TodoRecord(Object.assign({}, {
+        id: '1',
+        text: 'buy milk'
+    }, overrides));
 }
 
 describe('TodoItem component', () => {
-
     beforeEach(function() {
         this.sinon.stub(TodoItem.WrappedComponent.prototype, 'componentDidUpdate');
     });
@@ -189,7 +188,7 @@ describe('TodoItem component', () => {
         editField.simulate('keydown', { which: ENTER });
 
         expect(actions.createTodo).to.have.callCount(1);
-        expect(actions.createTodo).to.be.calledWith(todo.id, newTitle);
+        expect(actions.createTodo).to.be.calledWith(todo, newTitle);
     });
 
     it('should call editTodo handler with right arguments by pressing Enter if the todo is not new and there is text', () => {
@@ -203,5 +202,4 @@ describe('TodoItem component', () => {
         expect(actions.editTodo).to.have.callCount(1);
         expect(actions.editTodo).to.be.calledWith(todo.id, newTitle);
     });
-
 });

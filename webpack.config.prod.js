@@ -2,7 +2,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const clientPath = path.join(__dirname, 'client');
@@ -34,16 +33,6 @@ config.module.loaders.push(
 
 config.plugins.push(
     new webpack.optimize.OccurenceOrderPlugin(),
-    new HtmlWebpackPlugin({
-        favicon: './favicon.ico',
-        inject: 'body',
-        template: path.join(clientPath, 'index.html'),
-        minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            preserveLineBreaks: true
-        }
-    }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         filename: '[chunkhash]-[name].js'

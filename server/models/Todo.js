@@ -5,23 +5,22 @@ const R = require('ramda');
 
 const todoSchema = new mongoose.Schema({
     id: {
-        type: Number,
+        type: String,
         unique: true,
         index: true
     },
-    uid: {
-        type: String
-    },
+    uid: String,
     text: String,
     completed: {
         type: Boolean,
         default: false
-    }
+    },
+    sequence: Number
 }, {
     timestamps: true
 });
 
-todoSchema.statics.getPublicFields = R.pick([ 'id', 'uid', 'text', 'completed' ]);
-todoSchema.statics.getMutableFields = R.pick([ 'text', 'completed' ]);
+todoSchema.statics.getPublicFields = R.pick([ 'id', 'uid', 'text', 'completed', 'sequence' ]);
+todoSchema.statics.getMutableFields = R.pick([ 'text', 'completed', 'sequence' ]);
 
 module.exports = mongoose.model('Todo', todoSchema);

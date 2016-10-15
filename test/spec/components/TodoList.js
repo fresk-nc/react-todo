@@ -1,6 +1,7 @@
 import TodoList from 'components/TodoList';
 import TodoItem from 'components/TodoItem';
-import { fromJS } from 'immutable';
+import TodoRecord from 'records/TodoRecord';
+import { OrderedMap } from 'immutable';
 import { shallow } from 'enzyme';
 
 function setup(props) {
@@ -25,18 +26,20 @@ function setup(props) {
 describe('TodoList component', () => {
 
     it('should render the entire list of todos', () => {
-        const todos = fromJS([
-            {
-                id: 1,
+        const todos = OrderedMap({
+            '1': new TodoRecord({
+                id: '1',
                 text: 'buy milk',
-                completed: false
-            },
-            {
-                id: 2,
+                completed: false,
+                sequence: 1
+            }),
+            '2': new TodoRecord({
+                id: '2',
                 text: 'buy bread',
-                completed: true
-            }
-        ]);
+                completed: true,
+                sequence: 2
+            })
+        });
         const { component } = setup({ todos });
 
         expect(component.find(TodoItem)).to.have.length(todos.size);
