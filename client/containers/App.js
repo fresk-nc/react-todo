@@ -80,8 +80,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        // fixme: use reselect
-        todos: state.todos.sort((a, b) => a.sequence - b.sequence),
+        todos: state.todos,
         status: state.status,
         notifications: state.notifications
     };
