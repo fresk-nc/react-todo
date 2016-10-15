@@ -1,30 +1,28 @@
 import { Map } from 'immutable';
+import createReducer from 'utils/createReducer';
 import types from 'constants/ActionTypes';
 
-const initialState = Map({
+const initialState = new Map({
     request: false,
     error: null
 });
 
-export default function status(state = initialState, action) {
-    switch (action.type) {
+export default createReducer(initialState, {
+    [types.GET_TODOS](state) {
+        return state.merge(new Map({
+            request: true,
+            error: null
+        }));
+    },
 
-        case types.GET_TODOS:
-            return state.merge(Map({
-                request: true,
-                error: null
-            }));
+    [types.GET_TODOS_SUCCESS](state) {
+        return state.set('request', false);
+    },
 
-        case types.GET_TODOS_SUCCESS:
-            return state.set('request', false);
-
-        case types.GET_TODOS_FAILURE:
-            return state.merge(Map({
-                request: false,
-                error: action.error
-            }));
-
-        default:
-            return state;
+    [types.GET_TODOS_FAILURE](state, action) {
+        return state.merge(new Map({
+            request: false,
+            error: action.error
+        }));
     }
-}
+});

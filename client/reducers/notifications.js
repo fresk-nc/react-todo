@@ -1,29 +1,33 @@
 import { List, Map } from 'immutable';
+import createReducer from 'utils/createReducer';
 import types from 'constants/ActionTypes';
 
-export default function status(state = List(), action) {
-    switch (action.type) {
+export default createReducer(new List(), {
+    [types.DELETE_NOTIFICATION](state) {
+        return state.shift();
+    },
 
-        case types.DELETE_NOTIFICATION:
-            return state.shift();
+    [types.DELETE_TODO_FAILURE](state) {
+        return state.push(new Map({
+            type: 'notification.deleteFail'
+        }));
+    },
 
-        case types.DELETE_TODO_FAILURE:
-            return state.push(Map({
-                type: 'notification.deleteFail'
-            }));
+    [types.CREATE_TODO_FAILURE](state) {
+        return state.push(new Map({
+            type: 'notification.createFail'
+        }));
+    },
 
-        case types.CREATE_TODO_FAILURE:
-            return state.push(Map({
-                type: 'notification.createFail'
-            }));
+    [types.EDIT_TODO_FAILURE](state) {
+        return state.push(new Map({
+            type: 'notification.editFail'
+        }));
+    },
 
-        case types.EDIT_TODO_FAILURE:
-        case types.COMPLETE_TODO_FAILURE:
-            return state.push(Map({
-                type: 'notification.editFail'
-            }));
-
-        default:
-            return state;
+    [types.COMPLETE_TODO_FAILURE](state) {
+        return state.push(new Map({
+            type: 'notification.editFail'
+        }));
     }
-}
+});
