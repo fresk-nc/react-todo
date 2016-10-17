@@ -15,6 +15,7 @@ module.exports = {
             'react-addons-css-transition-group',
             'react-redux',
             'react-intl',
+            'react-intl-redux',
             'redux',
             'redux-optimist',
             'immutable/dist/immutable.js',
