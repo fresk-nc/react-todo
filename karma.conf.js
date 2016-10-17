@@ -17,6 +17,7 @@ module.exports = function(config) {
             'test/index.js': [ 'webpack' ]
         },
         webpack: {
+            devtool: 'eval',
             resolve: webpackConfig.resolve,
             plugins: [
                 new webpack.DefinePlugin({
