@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TodoActions from 'actions';
 import { FormattedMessage } from 'react-intl';
+import { Map, List } from 'immutable';
 
 import Header from 'components/Header';
 import MainSection from 'components/MainSection';
@@ -13,11 +14,10 @@ class App extends React.Component {
     static displayName = 'App';
 
     static propTypes = {
-        // fixme: object -> instanceOf(List || Map)
         actions: React.PropTypes.object.isRequired,
-        todos: React.PropTypes.object.isRequired,
-        status: React.PropTypes.object.isRequired,
-        notifications: React.PropTypes.object.isRequired
+        todos: React.PropTypes.instanceOf(Map).isRequired,
+        status: React.PropTypes.instanceOf(Map).isRequired,
+        notifications: React.PropTypes.instanceOf(List).isRequired
     };
 
     constructor(props) {

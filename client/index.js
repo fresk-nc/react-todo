@@ -1,6 +1,6 @@
 import Root from 'containers/Root';
 import configureStore from './store/configureStore';
-import { addLocaleData } from 'react-intl';
+import loadLocale from 'utils/loadLocale';
 import config from './config';
 import './styles/index.styl';
 
@@ -10,28 +10,17 @@ if (!config.availableLocales.includes(locale)) {
     locale = config.defaultLocale;
 }
 
-const waitForChunk = require('bundle?name=[name]!loc/' + locale + '.js');
-
-if (!window.Intl) {
-    require.ensure([], (require) => {
-        require('intl');
-        require.context('intl/locale-data/jsonp/', false, /ru\.js|en\.js/)('./' + locale + '.js');
-        runApp();
+loadLocale(locale, (messages) => {
+    const store = configureStore({
+        intl: {
+            defaultLocale: config.defaultLocale,
+            locale,
+            messages
+        }
     });
-} else {
-    runApp();
-}
 
-function runApp() {
-    waitForChunk((intlData) => {
-        const { messages, localeData } = intlData;
-        const store = configureStore();
-
-        addLocaleData(localeData);
-
-        ReactDOM.render(
-            <Root store={store} locale={locale} messages={messages} />,
-            document.getElementById('root')
-        );
-    });
-}
+    ReactDOM.render(
+        <Root store={store} />,
+        document.getElementById('root')
+    );
+});
