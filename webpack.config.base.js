@@ -18,6 +18,7 @@ module.exports = {
             'react-intl-redux',
             'redux',
             'redux-optimist',
+            'redux-thunk',
             'immutable/dist/immutable.js',
             'keymirror',
             'whatwg-fetch'

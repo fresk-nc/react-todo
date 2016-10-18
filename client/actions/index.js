@@ -2,13 +2,23 @@ import uuid from 'node-uuid';
 import { CALL_API } from 'middleware/api';
 import types from 'constants/ActionTypes';
 
-export function getTodos() {
+function fetchTodos() {
     return {
         [CALL_API]: {
             endpoint: 'api/todos',
             method: 'GET',
             types: [ types.GET_TODOS, types.GET_TODOS_SUCCESS, types.GET_TODOS_FAILURE ]
         }
+    };
+}
+
+export function getTodos() {
+    return (dispatch, getState) => {
+        if (getState().todos.size > 0) {
+            return null;
+        }
+
+        return dispatch(fetchTodos());
     };
 }
 

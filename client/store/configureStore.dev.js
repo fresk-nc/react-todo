@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import api from 'middleware/api';
 import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
 import rootReducer from 'reducers';
 import { Iterable } from 'immutable';
 
@@ -19,6 +20,7 @@ export default function configureStore(initialState) {
         rootReducer,
         initialState,
         applyMiddleware(
+            thunk,
             api,
             createLogger({ stateTransformer })
         )
