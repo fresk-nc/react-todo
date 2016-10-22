@@ -64,7 +64,7 @@ module.exports = function(config) {
         webpackMiddleware: {
             noInfo: true
         },
-        reporters: [ 'progress' ],
+        reporters: [ 'mocha' ],
         browsers: [ 'jsdom' ],
         singleRun: true
     });
